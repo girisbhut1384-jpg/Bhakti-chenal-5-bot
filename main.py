@@ -10,17 +10,25 @@ import random
 import re
 import textwrap
 from datetime import datetime
+
+# --- PIL & MOVIEPY FIX START (यह एरर को हमेशा के लिए रोकेगा) ---
+import PIL
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
+
+# अगर MoviePy पुराना 'ANTIALIAS' मांगेगा, तो हम उसे नया 'LANCZOS' दे देंगे
+if not hasattr(Image, 'ANTIALIAS'):
+    Image.ANTIALIAS = Image.LANCZOS
 
 if not hasattr(Image, 'Resampling'):
     Image.Resampling = getattr(Image, 'LANCZOS', 1)
+# --- PIL & MOVIEPY FIX END ---
 
 from moviepy.editor import ImageClip, AudioFileClip, concatenate_videoclips, CompositeVideoClip
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 
-print("🔓 5-Channel Premium & Safe Machine Started...")
+print("🔓 5-Channel Premium & Safe Machine Started (With PIL Fix)...")
 os.system("sudo rm -f /etc/ImageMagick-6/policy.xml")
 os.system("sudo rm -f /etc/ImageMagick-7/policy.xml")
 
@@ -69,7 +77,7 @@ def extract_json_safely(raw_text):
     match = re.search(r'\{[\s\S]*\}', str(raw_text).strip())
     return match.group(0) if match else "{}"
 
-# 🟢 Script Generator (Robust Try/Except)
+# 🟢 Script Generator 
 def get_ai_script(channel_name, hook_theme, is_long_video=False):
     print(f"\n✅ {channel_name} ke liye dumdaar script likhi jaa rahi hai... (Long: {is_long_video})")
     word_count = "350-400" if is_long_video else "80-90"
@@ -143,7 +151,7 @@ def create_human_voice(text, filename):
     asyncio.set_event_loop(loop)
     loop.run_until_complete(_generate())
 
-# 🟢 HUGE Text, Perfect Stroke (From Your Old Code)
+# 🟢 HUGE Text, Perfect Stroke
 def create_centered_text_clip(text, duration, is_long_video):
     canvas_w, canvas_h = (1920, 1080) if is_long_video else (1080, 1920)
     img = Image.new('RGBA', (canvas_w, canvas_h), (0, 0, 0, 0))
@@ -160,14 +168,14 @@ def create_centered_text_clip(text, duration, is_long_video):
         text_w, text_h = draw.textsize(wrapped_text, font=font)
         
     x, y = (canvas_w - text_w) // 2, (canvas_h - text_h) // 2
-    if is_long_video: y = int(canvas_h * 0.75) # Long video me text thoda niche
+    if is_long_video: y = int(canvas_h * 0.75) 
     
     draw.multiline_text((x, y), wrapped_text, font=font, fill="#FFE81F", stroke_width=8, stroke_fill="black", align='center')
     temp_filename = f"temp_caption_{random.randint(10000, 99999)}.png"
     img.save(temp_filename)
     return ImageClip(temp_filename).set_duration(duration)
 
-# 🟢 Studio Image Fit Magic (From Your Old Code)
+# 🟢 Studio Image Fit Magic
 def process_image_for_video(img_path, output_path, is_long_video):
     img = Image.open(img_path).convert("RGB")
     w, h = (1920, 1080) if is_long_video else (1080, 1920)
@@ -190,7 +198,7 @@ def process_image_for_video(img_path, output_path, is_long_video):
     bg.save(output_path)
     return output_path
 
-# 🟢 Video Assembler
+# 🟢 Video Assembler (Fixed)
 def make_video(image_files, captions, final_vid, audio_file, is_long_video):
     print("🎬 Professional Video Render ho raha hai...")
     main_audio = AudioFileClip(audio_file)
@@ -212,7 +220,9 @@ def make_video(image_files, captions, final_vid, audio_file, is_long_video):
                 txt_clip = create_centered_text_clip(cap_text, time_per_image, is_long_video)
                 txt_clip = txt_clip.set_position(('center', 0.65), relative=True) 
                 final_clip = CompositeVideoClip([zoomed_clip.set_position(('center', 'center')), txt_clip], size=(w, h)).set_duration(time_per_image)
-            except: final_clip = zoomed_clip
+            except Exception as e: 
+                print(f"Text clip error (ignored): {e}")
+                final_clip = zoomed_clip
         else: final_clip = zoomed_clip
         
         clips.append(final_clip)
@@ -253,7 +263,7 @@ def run_network():
     random.shuffle(channels)
 
     for ch_name in channels:
-        for attempt in range(3): # 3 chances per channel if anything fails
+        for attempt in range(3): 
             try:
                 config = CHANNELS_CONFIG[ch_name]
                 if not config["token"]: break
@@ -275,7 +285,7 @@ def run_network():
                 delay = random.randint(300, 600)
                 print(f"⏳ Agle channel ke liye {delay/60:.1f} minute ka wait...\n")
                 time.sleep(delay)
-                break # Success! Break retry loop and move to next channel
+                break 
                 
             except Exception as e:
                 print(f"🛑 {ch_name} me Error: {e}. Machine dobara koshish kar rahi hai...")
