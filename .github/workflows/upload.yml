@@ -1,0 +1,40 @@
+name: 5-Channel Master Auto-Uploader
+
+on:
+  schedule:
+    - cron: '0 0,6,12,18 * * *'
+  workflow_dispatch:
+
+jobs:
+  build_and_upload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install System Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y imagemagick ffmpeg
+
+      - name: Install Python Libraries
+        run: |
+          pip install requests edge-tts moviepy==1.0.3 pillow google-api-python-client google-auth google-auth-oauthlib google-auth-httplib2
+
+      - name: Run Master Machine
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          TOKEN_GBYOUTUBER: ${{ secrets.TOKEN_GBYOUTUBER }}
+          TOKEN_HEALTH: ${{ secrets.TOKEN_HEALTH }}
+          TOKEN_SUCCESS: ${{ secrets.TOKEN_SUCCESS }}
+          TOKEN_SANATAN: ${{ secrets.TOKEN_SANATAN }}
+          TOKEN_BOOK: ${{ secrets.TOKEN_BOOK }}
+        run: |
+          python main.py
+
