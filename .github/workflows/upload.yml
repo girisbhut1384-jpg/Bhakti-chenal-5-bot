@@ -1,8 +1,9 @@
-name: 5-Channel Master Auto-Uploader
+name: 5-Channel Super-Fast Auto-Uploader
 
 on:
   schedule:
-    - cron: '0 0,6,12,18 * * *'
+    # भारतीय समय: सुबह 6:30, दोपहर 12:30, शाम 6:30 (Long), रात 12:30
+    - cron: '0 1,7,13,19 * * *'
   workflow_dispatch:
 
 jobs:
@@ -37,4 +38,3 @@ jobs:
           TOKEN_BOOK: ${{ secrets.TOKEN_BOOK }}
         run: |
           python main.py
-
