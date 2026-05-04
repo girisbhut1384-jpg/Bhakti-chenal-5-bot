@@ -1,5 +1,6 @@
 import os, sys, requests, asyncio, edge_tts, time, urllib.parse, json, random, re, textwrap
 from datetime import datetime
+from concurrent.futures import ThreadPoolExecutor
 
 # --- PIL & MOVIEPY FIX ---
 import PIL
@@ -12,9 +13,10 @@ from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 
-print("🚀 V4 Master Machine: Anti-Crash & Safe Downloader Active...")
+print("🚀 V5 Master Machine: English Captions & Viral Visuals Active...")
 os.system("sudo rm -f /etc/ImageMagick-6/policy.xml")
 
+# अंग्रेजी के शानदार फॉन्ट के लिए Roboto-Black डाउनलोड
 if not os.path.exists("Roboto-Black.ttf"):
     os.system("wget -qO Roboto-Black.ttf https://github.com/google/fonts/raw/main/apache/roboto/Roboto-Black.ttf")
 
@@ -32,22 +34,33 @@ CHANNELS_CONFIG = {
 }
 
 def get_scene_script(channel_name, hook_theme, is_long_video=False):
-    print(f"📝 {channel_name} के लिए सीन-बाय-सीन स्क्रिप्ट तैयार हो रही है...")
+    print(f"📝 {channel_name} के लिए वायरल स्क्रिप्ट तैयार हो रही है...")
     word_limit = "400" if is_long_video else "70"
     scene_count = 15 if is_long_video else 6
     
     prompt = f"""Write a viral Hindi script for {channel_name} on theme "{hook_theme}".
-    Length: Exactly {word_limit} words. Style: Direct, Shocking.
-    No 'Namaskar' or 'Hello'. Start with the hook.
-    ENDING: "सब्सक्राइब करें और बायो में अमेज़न लिंक देखें।"
+    Length: Exactly {word_limit} words. Style: Extremely high-energy, fast-paced, mind-blowing.
+    NO 'Namaskar' or 'Hello'. Start immediately with a shocking hook.
+    ENDING: "सब्सक्राइब करें और बायो में लिंक देखें।"
     
-    CRITICAL: Provide {scene_count} logical scenes. Each scene must have a visual prompt matching the text exactly.
+    CRITICAL VISUAL RULES:
+    1. Image prompts MUST be Epic, Cinematic, Divine, Bright, and Positive. 
+    2. NO sad, depressing, or boring modern photos. If the topic is religion/Gita, generate glowing divine books, Lord Krishna, cosmic lighting.
+    
+    CRITICAL CAPTION RULES (TEXT ON SCREEN):
+    - Provide a short 2-3 word English caption for every scene (e.g., "SHOCKING TRUTH", "GITA SECRETS", "MIND BLOWN", "WAIT FOR IT").
+    - CAPTIONS MUST BE STRICTLY IN ENGLISH (Roman letters). NO HINDI TEXT FOR CAPTIONS.
+
     Return ONLY JSON:
     {{
-      "title": "Viral Title",
+      "title": "Viral Clickbait Title",
       "scenes": [
-        {{"text": "Hindi sentence", "prompt": "Detailed English image prompt matching this sentence"}},
-        ...
+        {{
+          "text": "Hindi spoken sentence...", 
+          "caption": "SHORT ENGLISH CAPTION", 
+          "prompt": "Epic highly detailed cinematic image prompt in English"
+        }},
+        ... (Generate exactly {scene_count} scenes)
       ]
     }}"""
 
@@ -59,58 +72,52 @@ def get_scene_script(channel_name, hook_theme, is_long_video=False):
     return json.loads(match.group(0))
 
 def download_single_image(idx, p, w, h):
-    url = f"https://image.pollinations.ai/prompt/{urllib.parse.quote(p + ', highly detailed, realistic, 8k')}?width={w}&height={h}&nologo=true&seed={random.randint(10000,99999)}"
+    # Added keywords for positive, vibrant, cinematic visuals
+    url = f"https://image.pollinations.ai/prompt/{urllib.parse.quote(p + ', cinematic lighting, highly detailed, vibrant, positive energy, 8k')}?width={w}&height={h}&nologo=true&seed={random.randint(10000,99999)}"
     fname = f"scene_{idx}.jpg"
     
-    for attempt in range(4): # 4 bar try karega agar file corrupt hui
+    for attempt in range(4):
         try:
             headers = {"User-Agent": "Mozilla/5.0"}
             r = requests.get(url, headers=headers, timeout=30)
-            if r.status_code == 200 and len(r.content) > 5000: # File minimum 5KB ki honi chahiye
+            if r.status_code == 200 and len(r.content) > 5000:
                 with open(fname, "wb") as f: f.write(r.content)
-                
-                # STRICT Validation: Kya ye sach me photo hai?
                 try:
                     img = Image.open(fname)
                     img.verify() 
                     return fname
-                except Exception as img_err:
-                    print(f"File corrupt hai, retry kar rahe hain... {img_err}")
-        except Exception as req_err: 
-            print(f"Download fail, retry... {req_err}")
-        time.sleep(2) # Retry se pehle thoda wait
+                except Exception as e: pass
+        except Exception as e: pass
+        time.sleep(2)
     return None
 
 def fetch_all_images_safe(scenes, is_long_video):
-    print("🎨 तस्वीरें सुरक्षित तरीके से डाउनलोड हो रही हैं (Anti-Block Mode)...")
+    print("🎨 हाई-क्वालिटी वायरल तस्वीरें डाउनलोड हो रही हैं...")
     w, h = (1920, 1080) if is_long_video else (1080, 1920)
-    valid_images = []
-    valid_scenes = []
-    
+    valid_images, valid_scenes = [], []
     for i, s in enumerate(scenes):
         img_path = download_single_image(i, s['prompt'], w, h)
         if img_path:
             valid_images.append(img_path)
             valid_scenes.append(s)
-        time.sleep(1) # IP block hone se bachane ke liye 1 second ka gap
-        
-    if len(valid_images) == 0:
-        raise Exception("Zero valid images downloaded. API Blocked or Network Error.")
-        
+        time.sleep(1)
+    if len(valid_images) == 0: raise Exception("Images failed.")
     return valid_images, valid_scenes
 
 async def create_voice(text, filename):
     comm = edge_tts.Communicate(text, "hi-IN-MadhurNeural", rate="+15%")
     await comm.save(filename)
 
-def create_text_clip(text, duration, is_long_video):
+def create_text_clip(caption_text, duration, is_long_video):
     w, h = (1920, 1080) if is_long_video else (1080, 1920)
     img = Image.new('RGBA', (w, h), (0, 0, 0, 0))
     draw = ImageDraw.Draw(img)
-    try: font = ImageFont.truetype("Roboto-Black.ttf", 90 if is_long_video else 115)
+    
+    # Using Roboto-Black for bold English captions
+    try: font = ImageFont.truetype("Roboto-Black.ttf", 100 if is_long_video else 130)
     except: font = ImageFont.load_default()
     
-    wrapped = textwrap.fill(text.upper(), width=30 if is_long_video else 15)
+    wrapped = textwrap.fill(caption_text.upper(), width=30 if is_long_video else 15)
     try:
         bbox = draw.multiline_textbbox((0, 0), wrapped, font=font, align='center')
         text_w = bbox[2] - bbox[0]
@@ -120,15 +127,16 @@ def create_text_clip(text, duration, is_long_video):
         
     x = (w - text_w) // 2
     y = (h - text_h) // 2
-    if is_long_video: y = int(h * 0.8)
+    if is_long_video: y = int(h * 0.8) # Bottom subtitles for long video
     
-    draw.multiline_text((x, y), wrapped, font=font, fill="#FFE81F", stroke_width=8, stroke_fill="black", align='center')
+    # Yellow text with heavy black stroke
+    draw.multiline_text((x, y), wrapped, font=font, fill="#FFE81F", stroke_width=10, stroke_fill="black", align='center')
     fname = f"txt_{random.randint(1,99999)}.png"
     img.save(fname)
     return ImageClip(fname).set_duration(duration)
 
 def assemble_video(image_files, scenes, output_vid, audio_file, is_long_video):
-    print("🎬 वीडियो रेंडरिंग (Safe & Fast Mode)...")
+    print("🎬 वीडियो रेंडरिंग (Hollywood Style Mode)...")
     main_audio = AudioFileClip(audio_file)
     dur_per_scene = main_audio.duration / len(image_files)
     clips = []
@@ -155,11 +163,12 @@ def assemble_video(image_files, scenes, output_vid, audio_file, is_long_video):
         
         base = ImageClip(proc_name).set_duration(dur_per_scene)
         zoom = base.resize(lambda t: 1 + 0.04 * (t/dur_per_scene))
-        txt = create_text_clip(scenes[i]['text'], dur_per_scene, is_long_video)
+        
+        # Ab screen par sirf 2-3 shabd ka English Caption aayega (Puri hindi script nahi)
+        txt = create_text_clip(scenes[i].get('caption', ''), dur_per_scene, is_long_video)
         clips.append(CompositeVideoClip([zoom.set_position('center'), txt.set_position('center')]))
     
     final = concatenate_videoclips(clips, method="compose").set_audio(main_audio)
-    # ultrafast aur 4 threads ke sath fast render hoga
     final.write_videofile(output_vid, fps=24, codec="libx264", audio_codec="aac", preset="ultrafast", threads=4, logger=None)
     main_audio.close()
     final.close()
@@ -177,9 +186,12 @@ def upload(token, fname, title, desc, tags, cat):
     raise Exception("Upload completely failed.")
 
 def run():
-    hour = (datetime.utcnow().hour + 5) % 24 # Rough IST
-    is_long = True if hour in [18, 19] else False
-    print(f"⚙️ Network Mode: {'LONG' if is_long else 'SHORTS'}")
+    # GitHub Action (UTC) ko Indian Time (IST) se match karne ka logic
+    # GitHub par 13:00 UTC chalne ka matlab India mein shaam ke 6:30 bajna hai.
+    hour = (datetime.utcnow().hour + 5) % 24 
+    is_long = True if hour in [18, 19] else False 
+    
+    print(f"⚙️ Network Mode: {'LONG (5-10 Mins)' if is_long else 'SHORTS (30-35 Sec)'}")
     
     channels = list(CHANNELS_CONFIG.keys())
     random.shuffle(channels)
@@ -202,8 +214,8 @@ def run():
                 upload(cfg['token'], out_file, title, desc, cfg['tags'], cfg['category'])
                 
                 print(f"✅ {ch_name} डन!")
-                time.sleep(60) # 1 min Anti-spam gap
-                break # Success, move to next channel
+                time.sleep(30)
+                break 
             except Exception as e: 
                 print(f"❌ Error in {ch_name} (Attempt {attempt+1}): {e}")
                 time.sleep(10)
