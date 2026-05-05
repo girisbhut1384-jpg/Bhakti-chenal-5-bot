@@ -13,11 +13,11 @@ from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 import urllib.request
 
-print("🚀 V9 Ultimate Master Machine: HUGE Guaranteed Text, High-Energy Voice & Perfect Faces...")
+print("🚀 V10 Ultimate Master Machine: Strict 40s Length & Exact Character Matching Active...")
 os.system("sudo rm -f /etc/ImageMagick-6/policy.xml")
 os.system("sudo rm -f /etc/ImageMagick-7/policy.xml")
 
-# 🟢 100% GUARANTEED FONT DOWNLOADER (यह फॉन्ट फेल हुआ तो कोड रुक जाएगा, लेकिन छोटा टेक्स्ट नहीं बनाएगा)
+# 🟢 100% GUARANTEED FONT DOWNLOADER
 font_path = "Roboto-Black.ttf"
 if not os.path.exists(font_path) or os.path.getsize(font_path) < 20000:
     print("📥 विशालकाय फॉन्ट डाउनलोड हो रहा है...")
@@ -46,24 +46,28 @@ def extract_json_safely(raw_text):
 
 def get_scene_script(channel_name, hook_theme, is_long_video=False):
     print(f"\n📝 {channel_name} के लिए दमदार और ज्ञानवर्धक कहानी लिखी जा रही है: {hook_theme}")
-    word_limit = "350-400" if is_long_video else "85-95"
-    scene_count = 15 if is_long_video else 8
+    
+    # 🟢 लम्बाई का पक्का इलाज: शॉर्ट्स के लिए 115 से 130 शब्द ताकि वीडियो 35-45 सेकंड का बने!
+    word_limit = "350-400" if is_long_video else "115-130"
+    scene_count = 15 if is_long_video else 10
     
     prompt = f"""Write a viral Hindi script for {channel_name}. THEME: "{hook_theme}".
     Length: Strictly between {word_limit} words.
     
     RULES:
     1. NO INTRODUCTIONS. DO NOT ask "Kya aap jante hain". START DIRECTLY WITH A SHOCKING HOOK!
-    2. Tell a deep, real story or fact. 
+    2. Tell a deep, real story or fact. Add enough detail to hit the exact word limit.
     3. Use commas (,) and ellipses (...) for dramatic AI voice pauses.
     4. END EXACTLY WITH: 'सब्सक्राइब करें और बायो में अमेज़न लिंक देखें।'
     
-    VISUAL RULES (STRICT MATCHING):
-    1. Visuals MUST strictly match the story.
-    2. Ensure {scene_count} logical visual scenes.
+    VISUAL RULES (STRICT EXACT CHARACTER MATCHING):
+    1. The visual prompt MUST exactly match the characters and action in the story.
+    2. If the story is about a father and son, the prompt MUST specifically describe "A wise father and his young son". Do NOT generate random girls, clouds, or unrelated objects.
+    3. Always specify the age, gender, and emotion of the main character in the prompt.
+    4. Ensure exactly {scene_count} logical visual scenes.
     
     CAPTION RULES:
-    Provide exactly 1 to 2 ENGLISH words as a caption for EVERY scene (e.g., "SHOCKING", "DIVINE TRUTH"). MUST BE ENGLISH.
+    Provide exactly 1 to 2 ENGLISH words as a caption for EVERY scene (e.g., "SHOCKING", "FATHER'S ADVICE"). MUST BE ENGLISH.
 
     Return ONLY JSON:
     {{
@@ -72,7 +76,7 @@ def get_scene_script(channel_name, hook_theme, is_long_video=False):
         {{
           "text": "Hindi spoken sentence...", 
           "caption": "SHORT ENGLISH CAPTION", 
-          "prompt": "Epic highly detailed cinematic image prompt matching the text"
+          "prompt": "Epic highly detailed cinematic image prompt matching the exact characters and text"
         }},
         ...
       ]
@@ -94,7 +98,7 @@ def get_scene_script(channel_name, hook_theme, is_long_video=False):
     raise Exception("🚨 AI Model Failed!")
 
 def download_single_image(idx, p, w, h):
-    # 🟢 सीक्रेट फेस करेक्शन प्रॉम्प्ट (अब चेहरे खराब नहीं होंगे)
+    # फेस करेक्शन और सिनेमैटिक लुक की गारंटी
     enhanced_prompt = p + ", perfectly symmetric facial features, flawless, extremely beautiful, divine, ultra-realistic, 8k resolution, cinematic masterpiece"
     url = f"https://image.pollinations.ai/prompt/{urllib.parse.quote(enhanced_prompt)}?width={w}&height={h}&nologo=true&seed={random.randint(10000,99999)}"
     fname = f"scene_{idx}.jpg"
@@ -114,7 +118,7 @@ def download_single_image(idx, p, w, h):
     return None
 
 def fetch_all_images_safe(scenes, is_long_video):
-    print("🎨 शानदार और पक्की तस्वीरें डाउनलोड हो रही हैं...")
+    print("🎨 शानदार और सटीक कैरेक्टर वाली तस्वीरें डाउनलोड हो रही हैं...")
     w, h = (1920, 1080) if is_long_video else (1080, 1920)
     valid_images, valid_scenes = [], []
     for i, s in enumerate(scenes):
@@ -131,7 +135,6 @@ def create_human_voice(text, filename):
     async def _generate():
         for _ in range(3):
             try:
-                # 🟢 आवाज़ अब तेज़ होगी और वॉल्यूम भी भारी होगा
                 communicate = edge_tts.Communicate(text, "hi-IN-MadhurNeural", rate="+15%", volume="+50%") 
                 await communicate.save(filename)
                 return True
@@ -146,10 +149,8 @@ def create_text_clip(caption_text, duration, is_long_video):
     img = Image.new('RGBA', (w, h), (0, 0, 0, 0))
     draw = ImageDraw.Draw(img)
     
-    # 🟢 बहुत बड़ा फॉन्ट (शॉर्ट्स में 180 साइज़)
     font_size = 130 if is_long_video else 180
     
-    # यह सुनिश्चित करेगा कि फॉन्ट लोड हो, वरना Ubuntu का सिस्टम फॉन्ट लेगा
     try: 
         font = ImageFont.truetype("Roboto-Black.ttf", font_size)
     except: 
@@ -167,10 +168,8 @@ def create_text_clip(caption_text, duration, is_long_video):
         text_w, text_h = draw.textsize(wrapped, font=font)
         
     x = (w - text_w) // 2
-    # गोल्डन पोजीशन: 65% नीचे (चेहरा बिल्कुल साफ़ दिखेगा)
     y = int(h * 0.85) if is_long_video else int(h * 0.65) 
     
-    # पीला टेक्स्ट और 12 पिक्सेल का बहुत मोटा काला बॉर्डर
     draw.multiline_text((x, y), wrapped, font=font, fill="#FFE81F", stroke_width=12, stroke_fill="black", align='center')
     fname = f"txt_{random.randint(1,99999)}.png"
     img.save(fname)
