@@ -1,7 +1,7 @@
 import os, sys, requests, asyncio, edge_tts, time, urllib.parse, json, random, re, textwrap
-from datetime import datetime
+from datetime import datetime, timedelta
 
-# --- PIL & MOVIEPY FIX ---
+# --- PIL & MOVIEPY FIX (एरर रोकने के लिए) ---
 import PIL
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 if not hasattr(Image, 'ANTIALIAS'): Image.ANTIALIAS = getattr(Image, 'LANCZOS', 1)
@@ -13,7 +13,7 @@ from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 import urllib.request
 
-print("🚀 V10 Ultimate Master Machine: Strict 40s Length & Exact Character Matching Active...")
+print("🚀 Ultimate Zero-Error Machine: Fast Paced Human Voice, 8k Images & Perfect Timing Active!")
 os.system("sudo rm -f /etc/ImageMagick-6/policy.xml")
 os.system("sudo rm -f /etc/ImageMagick-7/policy.xml")
 
@@ -23,7 +23,6 @@ if not os.path.exists(font_path) or os.path.getsize(font_path) < 20000:
     print("📥 विशालकाय फॉन्ट डाउनलोड हो रहा है...")
     try:
         urllib.request.urlretrieve("https://github.com/googlefonts/roboto/raw/main/src/hinted/Roboto-Black.ttf", font_path)
-        print("✅ फॉन्ट सफलतापूर्वक डाउनलोड हो गया!")
     except Exception as e:
         print(f"❌ फॉन्ट डाउनलोड एरर: {e}")
 
@@ -33,11 +32,11 @@ CLIENT_SECRET = os.environ.get("GOOGLE_CLIENT_SECRET")
 
 # --- MASSIVE VARIETY CHANNELS CONFIG ---
 CHANNELS_CONFIG = {
-    "GB_YOUTUBER": {"token": os.environ.get("TOKEN_GBYOUTUBER"), "category": "22", "tags": ["bhakti", "krishna", "sanatan", "shorts"], "hooks": ["श्री कृष्ण का सबसे बड़ा चमत्कार", "गीता का वह ज्ञान जो जीवन बदल दे", "महाभारत का अनसुना रहस्य", "भगवान शिव का भयंकर क्रोध"]},
-    "HEALTH_AYURVEDA": {"token": os.environ.get("TOKEN_HEALTH"), "category": "26", "tags": ["health", "ayurveda", "fitness", "shorts"], "hooks": ["एसिडिटी का 1 मिनट में जड़ से इलाज", "आयुर्वेद के 3 सबसे गुप्त नियम", "वजन घटाने का चमत्कारी नुस्खा", "सुबह जल्दी उठने के जादुई फायदे"]},
-    "SUCCESS_BUSINESS": {"token": os.environ.get("TOKEN_SUCCESS"), "category": "27", "tags": ["business", "motivation", "money", "shorts"], "hooks": ["रतन टाटा के सफलता के 5 नियम", "0 इन्वेस्टमेंट से करोड़पति कैसे बनें", "गरीबी से अमीरी का सीधा रास्ता", "चाणक्य नीति जो आपको सफल बनाएगी"]},
-    "SANATAN_RAHASYA": {"token": os.environ.get("TOKEN_SANATAN"), "category": "24", "tags": ["rahasya", "mythology", "history", "shorts"], "hooks": ["कैलाश पर्वत का अनसुलझा और डरावना रहस्य", "अश्वत्थामा आज भी कहाँ भटक रहे हैं", "कलयुग का अंत कैसे और कब होगा", "समुद्र मंथन का असली सच"]},
-    "BOOK_SUMMARIES": {"token": os.environ.get("TOKEN_BOOK"), "category": "27", "tags": ["books", "summary", "knowledge", "shorts"], "hooks": ["Atomic Habits: आदतें कैसे बदलें", "Rich Dad Poor Dad की सबसे बड़ी सीख", "Think and Grow Rich: अमीर बनने का सीक्रेट", "Power of Subconscious Mind का जादू"]}
+    "GB_YOUTUBER": {"token": os.environ.get("TOKEN_GBYOUTUBER"), "category": "22", "tags": ["bhakti", "krishna", "sanatan", "shorts"], "hooks": ["श्री कृष्ण का सबसे बड़ा चमत्कार", "गीता का असली ज्ञान", "महाभारत का डरावना रहस्य", "भगवान शिव का भयंकर क्रोध"]},
+    "HEALTH_AYURVEDA": {"token": os.environ.get("TOKEN_HEALTH"), "category": "26", "tags": ["health", "ayurveda", "fitness", "shorts"], "hooks": ["एसिडिटी का 1 मिनट में जड़ से इलाज", "आयुर्वेद के 3 सबसे गुप्त नियम", "वजन घटाने का अचूक नुस्खा", "गर्म पानी पीने के खतरनाक फायदे"]},
+    "SUCCESS_BUSINESS": {"token": os.environ.get("TOKEN_SUCCESS"), "category": "27", "tags": ["business", "motivation", "money", "shorts"], "hooks": ["रतन टाटा के सफलता के 5 नियम", "0 इन्वेस्टमेंट से करोड़पति कैसे बनें", "गरीबी से अमीरी का असली रास्ता", "चाणक्य नीति"]},
+    "SANATAN_RAHASYA": {"token": os.environ.get("TOKEN_SANATAN"), "category": "24", "tags": ["rahasya", "mythology", "history", "shorts"], "hooks": ["कैलाश पर्वत का अनसुलझा रहस्य", "अश्वत्थामा आज भी कहाँ हैं", "कलयुग का अंत कब होगा", "समुद्र मंथन का असली सच"]},
+    "BOOK_SUMMARIES": {"token": os.environ.get("TOKEN_BOOK"), "category": "27", "tags": ["books", "summary", "knowledge", "shorts"], "hooks": ["Atomic Habits: आदतें कैसे बदलें", "Rich Dad Poor Dad की असली सीख", "Think and Grow Rich: अमीर बनने का सीक्रेट", "Power of Subconscious Mind"]}
 }
 
 def extract_json_safely(raw_text):
@@ -45,38 +44,37 @@ def extract_json_safely(raw_text):
     return match.group(0) if match else "{}"
 
 def get_scene_script(channel_name, hook_theme, is_long_video=False):
-    print(f"\n📝 {channel_name} के लिए दमदार और ज्ञानवर्धक कहानी लिखी जा रही है: {hook_theme}")
+    print(f"\n📝 {channel_name} के लिए दमदार और आकर्षक कहानी लिखी जा रही है...")
     
-    # 🟢 लम्बाई का पक्का इलाज: शॉर्ट्स के लिए 115 से 130 शब्द ताकि वीडियो 35-45 सेकंड का बने!
-    word_limit = "350-400" if is_long_video else "115-130"
-    scene_count = 15 if is_long_video else 10
+    # 🟢 30-40 सेकंड के लिए पक्का 100-115 शब्दों की लिमिट 
+    word_limit = "400-450" if is_long_video else "100-115"
+    scene_count = 15 if is_long_video else 9
     
-    prompt = f"""Write a viral Hindi script for {channel_name}. THEME: "{hook_theme}".
-    Length: Strictly between {word_limit} words.
+    prompt = f"""Write a highly engaging, viral Hindi script for {channel_name}. THEME: "{hook_theme}".
+    Length: Strictly between {word_limit} words. (Do NOT write less than {word_limit[:3]} words).
     
-    RULES:
-    1. NO INTRODUCTIONS. DO NOT ask "Kya aap jante hain". START DIRECTLY WITH A SHOCKING HOOK!
-    2. Tell a deep, real story or fact. Add enough detail to hit the exact word limit.
-    3. Use commas (,) and ellipses (...) for dramatic AI voice pauses.
-    4. END EXACTLY WITH: 'सब्सक्राइब करें और बायो में अमेज़न लिंक देखें।'
+    CRITICAL STORY & TIMING RULES (FOR 35+ SECONDS):
+    1. Provide a completely NEW, deep, and mind-blowing fact or story. It must be highly valuable knowledge.
+    2. STRICT BAN: NEVER start with "Ek ladka", "Ek 25 saal ka yuvak" or "Ek gaon mein". Start immediately with the shocking hook!
+    3. YOU MUST use heavy punctuation! Insert commas (,) after every 5-6 words, and periods (.) at the end of every thought. This forces the fast AI voice to take natural, human-like breaths and pauses.
+    4. END EXACTLY WITH: 'ऐसी ही अद्भुत जानकारी के लिए चैनल को अभी सब्सक्राइब करें।' (DO NOT MENTION AMAZON IN AUDIO).
     
-    VISUAL RULES (STRICT EXACT CHARACTER MATCHING):
-    1. The visual prompt MUST exactly match the characters and action in the story.
-    2. If the story is about a father and son, the prompt MUST specifically describe "A wise father and his young son". Do NOT generate random girls, clouds, or unrelated objects.
-    3. Always specify the age, gender, and emotion of the main character in the prompt.
-    4. Ensure exactly {scene_count} logical visual scenes.
+    CRITICAL VISUAL RULES (100% PERFECT CONTEXT MATCHING):
+    1. The visual prompt MUST exactly match the characters and action in the current sentence. 
+    2. If the story is about a King, describe a King. If it is about Krishna, describe Krishna. Do NOT generate unrelated items.
+    3. Ensure exactly {scene_count} visual scenes.
     
     CAPTION RULES:
-    Provide exactly 1 to 2 ENGLISH words as a caption for EVERY scene (e.g., "SHOCKING", "FATHER'S ADVICE"). MUST BE ENGLISH.
+    Provide exactly 1 to 2 ENGLISH words as a caption for EVERY scene (e.g., "SHOCKING TRUTH", "DIVINE SECRET"). MUST BE ENGLISH.
 
     Return ONLY JSON:
     {{
       "title": "Viral Clickbait Hindi Title",
       "scenes": [
         {{
-          "text": "Hindi spoken sentence...", 
+          "text": "Hindi spoken sentence with lots of commas (,) for pauses...", 
           "caption": "SHORT ENGLISH CAPTION", 
-          "prompt": "Epic highly detailed cinematic image prompt matching the exact characters and text"
+          "prompt": "Epic highly detailed cinematic image prompt matching the exact characters"
         }},
         ...
       ]
@@ -98,8 +96,8 @@ def get_scene_script(channel_name, hook_theme, is_long_video=False):
     raise Exception("🚨 AI Model Failed!")
 
 def download_single_image(idx, p, w, h):
-    # फेस करेक्शन और सिनेमैटिक लुक की गारंटी
-    enhanced_prompt = p + ", perfectly symmetric facial features, flawless, extremely beautiful, divine, ultra-realistic, 8k resolution, cinematic masterpiece"
+    # 🟢 AI की दुनिया की सबसे बेस्ट क्वालिटी का सीक्रेट प्रॉम्प्ट
+    enhanced_prompt = p + ", Unreal Engine 5 render, award-winning photography, perfectly symmetric facial features, flawless, extremely beautiful, divine, ultra-realistic, 8k resolution, cinematic lighting masterpiece"
     url = f"https://image.pollinations.ai/prompt/{urllib.parse.quote(enhanced_prompt)}?width={w}&height={h}&nologo=true&seed={random.randint(10000,99999)}"
     fname = f"scene_{idx}.jpg"
     
@@ -118,7 +116,7 @@ def download_single_image(idx, p, w, h):
     return None
 
 def fetch_all_images_safe(scenes, is_long_video):
-    print("🎨 शानदार और सटीक कैरेक्टर वाली तस्वीरें डाउनलोड हो रही हैं...")
+    print("🎨 दुनिया की सबसे बेहतरीन तस्वीरें डाउनलोड हो रही हैं...")
     w, h = (1920, 1080) if is_long_video else (1080, 1920)
     valid_images, valid_scenes = [], []
     for i, s in enumerate(scenes):
@@ -131,10 +129,11 @@ def fetch_all_images_safe(scenes, is_long_video):
     return valid_images, valid_scenes
 
 def create_human_voice(text, filename):
-    print("🎙️ हाई-एनर्जी आवाज़ बन रही है (+15% Speed, +50% Volume)...")
+    print("🎙️ सुपर-फ़ास्ट लेकिन इमोशनल और सस्पेंस वाली आवाज़ बन रही है (+15% Speed)...")
     async def _generate():
         for _ in range(3):
             try:
+                # 🟢 स्पीड +15% है, लेकिन कॉमा (,) की वजह से मशीन इंसानों की तरह रुकेगी!
                 communicate = edge_tts.Communicate(text, "hi-IN-MadhurNeural", rate="+15%", volume="+50%") 
                 await communicate.save(filename)
                 return True
@@ -149,15 +148,12 @@ def create_text_clip(caption_text, duration, is_long_video):
     img = Image.new('RGBA', (w, h), (0, 0, 0, 0))
     draw = ImageDraw.Draw(img)
     
-    font_size = 130 if is_long_video else 180
+    font_size = 120 if is_long_video else 180
     
     try: 
         font = ImageFont.truetype("Roboto-Black.ttf", font_size)
     except: 
-        try:
-            font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", font_size)
-        except:
-            font = ImageFont.load_default()
+        font = ImageFont.load_default()
     
     wrapped = textwrap.fill(caption_text.upper(), width=30 if is_long_video else 12)
     try:
@@ -176,7 +172,7 @@ def create_text_clip(caption_text, duration, is_long_video):
     return ImageClip(fname).set_duration(duration)
 
 def assemble_video(image_files, scenes, output_vid, audio_file, is_long_video):
-    print("🎬 Professional Video Render ho raha hai...")
+    print(f"🎬 {'LONG VIDEO' if is_long_video else 'SHORTS'} Render ho raha hai...")
     main_audio = AudioFileClip(audio_file)
     dur_per_scene = main_audio.duration / len(image_files)
     clips = []
@@ -208,7 +204,7 @@ def assemble_video(image_files, scenes, output_vid, audio_file, is_long_video):
         clips.append(CompositeVideoClip([zoom.set_position('center'), txt.set_position(('center', 'center'))]))
     
     final = concatenate_videoclips(clips, method="compose").set_audio(main_audio)
-    final.write_videofile(output_vid, fps=30, codec="libx264", audio_codec="aac", preset="ultrafast", threads=4, logger=None)
+    final.write_videofile(output_vid, fps=24, codec="libx264", audio_codec="aac", preset="ultrafast", threads=4, logger=None)
     main_audio.close()
     final.close()
 
@@ -232,10 +228,12 @@ def upload_video(token, filename, title, description, tags, category):
     raise Exception("Upload completely failed.")
 
 def run_network():
-    hour = (datetime.utcnow().hour + 5) % 24 
-    is_long = True if hour in [18, 19] else False 
+    # 🟢 INDIAN TIME LOGIC (IST) - लॉन्ग वीडियो शाम 6 से 8 के बीच बनेगा
+    ist_time = datetime.utcnow() + timedelta(hours=5, minutes=30)
+    is_long = True if ist_time.hour in [18, 19] else False 
     
-    print(f"\n⚙️ Network Mode: {'LONG (5-10 Mins)' if is_long else 'SHORTS (35-45 Sec)'}")
+    print(f"\n⚙️ Current IST Time: {ist_time.strftime('%I:%M %p')}")
+    print(f"⚙️ Network Mode: {'LONG (16:9, 3+ Mins)' if is_long else 'SHORTS (9:16, 35-45s)'}")
     
     channels = list(CHANNELS_CONFIG.keys())
     random.shuffle(channels)
@@ -254,7 +252,10 @@ def run_network():
                 assemble_video(imgs, valid_scenes, out_file, "v.mp3", is_long)
                 
                 title = data['title'] if is_long else f"{data['title'][:70]} #shorts"
-                desc = f"🔥 बेहतरीन प्रोडक्ट्स खरीदें यहाँ से: https://www.amazon.in/?tag=girishbhut07-21\n\n{full_text}"
+                
+                # 🟢 एकदम साफ़-सुथरा डिस्क्रिप्शन, अमेजॉन लिंक के साथ
+                desc = f"{full_text}\n\n🔥 बेहतरीन प्रोडक्ट्स खरीदें: https://www.amazon.in/?tag=girishbhut07-21"
+                
                 upload_video(cfg['token'], out_file, title, desc, cfg['tags'], cfg['category'])
                 
                 print(f"✅ {ch_name} Video Live!")
