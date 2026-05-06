@@ -13,7 +13,7 @@ from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 import urllib.request
 
-print("🚀 Ultimate Zero-Error Machine: Fast Paced Human Voice, 8k Images & Perfect Timing Active!")
+print("🚀 V12 Ultimate Master: Auto-Reject, 40s Guaranteed Length & Super-Fast Voice Active!")
 os.system("sudo rm -f /etc/ImageMagick-6/policy.xml")
 os.system("sudo rm -f /etc/ImageMagick-7/policy.xml")
 
@@ -44,28 +44,27 @@ def extract_json_safely(raw_text):
     return match.group(0) if match else "{}"
 
 def get_scene_script(channel_name, hook_theme, is_long_video=False):
-    print(f"\n📝 {channel_name} के लिए दमदार और आकर्षक कहानी लिखी जा रही है...")
+    print(f"\n📝 {channel_name} के लिए दमदार कहानी (Auto-Reject System के साथ) लिखी जा रही है...")
     
-    # 🟢 30-40 सेकंड के लिए पक्का 100-115 शब्दों की लिमिट 
-    word_limit = "400-450" if is_long_video else "100-115"
-    scene_count = 15 if is_long_video else 9
+    # 🟢 पक्का 40 सेकंड का समय: शब्द कम कर दिए (80-95) और सीन भी घटाकर सिर्फ 5 कर दिए!
+    word_limit = "400-450" if is_long_video else "80-95"
+    scene_count = 15 if is_long_video else 5
     
     prompt = f"""Write a highly engaging, viral Hindi script for {channel_name}. THEME: "{hook_theme}".
-    Length: Strictly between {word_limit} words. (Do NOT write less than {word_limit[:3]} words).
+    Length: Strictly between {word_limit} words. (Crucial: Do not exceed the word count).
     
-    CRITICAL STORY & TIMING RULES (FOR 35+ SECONDS):
-    1. Provide a completely NEW, deep, and mind-blowing fact or story. It must be highly valuable knowledge.
-    2. STRICT BAN: NEVER start with "Ek ladka", "Ek 25 saal ka yuvak" or "Ek gaon mein". Start immediately with the shocking hook!
-    3. YOU MUST use heavy punctuation! Insert commas (,) after every 5-6 words, and periods (.) at the end of every thought. This forces the fast AI voice to take natural, human-like breaths and pauses.
-    4. END EXACTLY WITH: 'ऐसी ही अद्भुत जानकारी के लिए चैनल को अभी सब्सक्राइब करें।' (DO NOT MENTION AMAZON IN AUDIO).
+    CRITICAL STORY RULES (STRICT BANS):
+    1. STRICT BAN: NEVER use the words "Kya aap jante hain", "Ek ladka", "Ek aadmi", "Ek 25 varshiya yuvak". I will reject the script if you use these.
+    2. Start immediately with a shocking fact, deep secret, or intense action.
+    3. YOU MUST use heavy punctuation! Insert commas (,) after every 4-5 words, and periods (.) at the end of every thought. This forces the AI voice to pause naturally.
+    4. END EXACTLY WITH: 'ऐसी ही अद्भुत जानकारी के लिए चैनल को अभी सब्सक्राइब करें।' (Do NOT mention Amazon).
     
-    CRITICAL VISUAL RULES (100% PERFECT CONTEXT MATCHING):
-    1. The visual prompt MUST exactly match the characters and action in the current sentence. 
-    2. If the story is about a King, describe a King. If it is about Krishna, describe Krishna. Do NOT generate unrelated items.
-    3. Ensure exactly {scene_count} visual scenes.
+    CRITICAL VISUAL RULES:
+    1. Ensure exactly {scene_count} visual scenes. Do NOT create more than {scene_count} scenes.
+    2. The visual prompt MUST exactly match the characters in the current sentence.
     
     CAPTION RULES:
-    Provide exactly 1 to 2 ENGLISH words as a caption for EVERY scene (e.g., "SHOCKING TRUTH", "DIVINE SECRET"). MUST BE ENGLISH.
+    Provide exactly 1 to 2 ENGLISH words as a caption for EVERY scene. MUST BE ENGLISH.
 
     Return ONLY JSON:
     {{
@@ -73,7 +72,7 @@ def get_scene_script(channel_name, hook_theme, is_long_video=False):
       "scenes": [
         {{
           "text": "Hindi spoken sentence with lots of commas (,) for pauses...", 
-          "caption": "SHORT ENGLISH CAPTION", 
+          "caption": "SHORT ENGLISH", 
           "prompt": "Epic highly detailed cinematic image prompt matching the exact characters"
         }},
         ...
@@ -82,21 +81,34 @@ def get_scene_script(channel_name, hook_theme, is_long_video=False):
 
     url = "https://api.groq.com/openai/v1/chat/completions"
     headers = {"Authorization": f"Bearer {GROQ_KEY}", "Content-Type": "application/json"}
-    data = {"model": "llama-3.3-70b-versatile", "messages": [{"role": "user", "content": prompt}], "temperature": 0.7}
+    data = {"model": "llama-3.3-70b-versatile", "messages": [{"role": "user", "content": prompt}], "temperature": 0.75}
     
-    for attempt in range(3):
+    for attempt in range(5): # Retry limit 5 कर दी ताकि AI गड़बड़ करे तो दोबारा लिख सके
         try:
             res = requests.post(url, headers=headers, json=data, timeout=60)
             if res.status_code == 200:
                 parsed = json.loads(extract_json_safely(res.json()['choices'][0]['message']['content']))
                 if parsed.get('scenes'):
+                    full_text = " ".join([s['text'] for s in parsed['scenes']])
+                    
+                    # 🟢 AUTO-REJECT SYSTEM (ऑटो-रिजेक्ट फिल्टर)
+                    bad_words = ["क्या आप जानते हैं", "एक लड़का", "एक 25 वर्षीय", "एक युवक", "एक आदमी"]
+                    has_bad_word = any(bw in full_text for bw in bad_words)
+                    word_count = len(full_text.split())
+                    
+                    if has_bad_word and not is_long_video:
+                        print(f"⚠️ [रिजेक्ट] बकवास शुरुआत पकड़ी गई। दोबारा लिख रहा है... (Attempt {attempt+1})")
+                        continue
+                    if word_count > 115 and not is_long_video:
+                        print(f"⚠️ [रिजेक्ट] स्क्रिप्ट बहुत लंबी हो गई ({word_count} शब्द)। छोटी कर रहा है... (Attempt {attempt+1})")
+                        continue
+                        
                     return parsed
         except Exception as e:
             time.sleep(2)
-    raise Exception("🚨 AI Model Failed!")
+    raise Exception("🚨 AI Model Failed after multiple auto-rejects!")
 
 def download_single_image(idx, p, w, h):
-    # 🟢 AI की दुनिया की सबसे बेस्ट क्वालिटी का सीक्रेट प्रॉम्प्ट
     enhanced_prompt = p + ", Unreal Engine 5 render, award-winning photography, perfectly symmetric facial features, flawless, extremely beautiful, divine, ultra-realistic, 8k resolution, cinematic lighting masterpiece"
     url = f"https://image.pollinations.ai/prompt/{urllib.parse.quote(enhanced_prompt)}?width={w}&height={h}&nologo=true&seed={random.randint(10000,99999)}"
     fname = f"scene_{idx}.jpg"
@@ -133,7 +145,6 @@ def create_human_voice(text, filename):
     async def _generate():
         for _ in range(3):
             try:
-                # 🟢 स्पीड +15% है, लेकिन कॉमा (,) की वजह से मशीन इंसानों की तरह रुकेगी!
                 communicate = edge_tts.Communicate(text, "hi-IN-MadhurNeural", rate="+15%", volume="+50%") 
                 await communicate.save(filename)
                 return True
@@ -228,12 +239,12 @@ def upload_video(token, filename, title, description, tags, category):
     raise Exception("Upload completely failed.")
 
 def run_network():
-    # 🟢 INDIAN TIME LOGIC (IST) - लॉन्ग वीडियो शाम 6 से 8 के बीच बनेगा
+    # 🟢 INDIAN TIME LOGIC (IST)
     ist_time = datetime.utcnow() + timedelta(hours=5, minutes=30)
     is_long = True if ist_time.hour in [18, 19] else False 
     
     print(f"\n⚙️ Current IST Time: {ist_time.strftime('%I:%M %p')}")
-    print(f"⚙️ Network Mode: {'LONG (16:9, 3+ Mins)' if is_long else 'SHORTS (9:16, 35-45s)'}")
+    print(f"⚙️ Network Mode: {'LONG (16:9, 3+ Mins)' if is_long else 'SHORTS (9:16, 40s)'}")
     
     channels = list(CHANNELS_CONFIG.keys())
     random.shuffle(channels)
@@ -252,8 +263,6 @@ def run_network():
                 assemble_video(imgs, valid_scenes, out_file, "v.mp3", is_long)
                 
                 title = data['title'] if is_long else f"{data['title'][:70]} #shorts"
-                
-                # 🟢 एकदम साफ़-सुथरा डिस्क्रिप्शन, अमेजॉन लिंक के साथ
                 desc = f"{full_text}\n\n🔥 बेहतरीन प्रोडक्ट्स खरीदें: https://www.amazon.in/?tag=girishbhut07-21"
                 
                 upload_video(cfg['token'], out_file, title, desc, cfg['tags'], cfg['category'])
