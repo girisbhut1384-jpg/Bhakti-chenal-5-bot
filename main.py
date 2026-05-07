@@ -13,7 +13,7 @@ from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 import urllib.request
 
-print("🚀 Ultimate Zero-Error Machine: Smart Image Filters & Perfect Storyteller Active!")
+print("🚀 Ultimate Zero-Error Machine: Natural Voice, Wide Angle Cinematic Images & Real Stories Active!")
 os.system("sudo rm -f /etc/ImageMagick-6/policy.xml")
 
 font_path = "Roboto-Black.ttf"
@@ -28,13 +28,13 @@ GROQ_KEY = os.environ.get("GROQ_API_KEY")
 CLIENT_ID = "768932543756-hvbk02bm5avqesa1649892ufb73v11mq.apps.googleusercontent.com"
 CLIENT_SECRET = os.environ.get("GOOGLE_CLIENT_SECRET")
 
-# 🟢 हर चैनल के लिए अलग इमेज फ़िल्टर (ताकि बिज़नेस में लड़की की फोटो न आए)
+# 🟢 चैनल स्टाइल (अब इसमें Giant Face नहीं, बल्कि Wide Shot और Scene सेट है)
 CHANNELS_CONFIG = {
-    "GB_YOUTUBER": {"token": os.environ.get("TOKEN_GBYOUTUBER"), "category": "22", "tags": ["bhakti", "krishna"], "style": "divine, mythological, perfectly symmetric beautiful face, glowing aura, masterpiece, 8k", "hooks": ["श्री कृष्ण का सबसे बड़ा चमत्कार", "गीता का असली ज्ञान", "महाभारत का डरावना रहस्य"]},
-    "HEALTH_AYURVEDA": {"token": os.environ.get("TOKEN_HEALTH"), "category": "26", "tags": ["health", "ayurveda"], "style": "natural, healthy, realistic, cinematic lighting, 8k, highly detailed", "hooks": ["एसिडिटी का 1 मिनट में जड़ से इलाज", "आयुर्वेद के 3 सबसे गुप्त नियम", "गर्म पानी पीने के खतरनाक फायदे"]},
-    "SUCCESS_BUSINESS": {"token": os.environ.get("TOKEN_SUCCESS"), "category": "27", "tags": ["business", "motivation"], "style": "professional, corporate, successful, highly detailed realistic, cinematic, 8k", "hooks": ["रतन टाटा के सफलता के 5 नियम", "0 इन्वेस्टमेंट से करोड़पति कैसे बनें", "चाणक्य नीति"]},
-    "SANATAN_RAHASYA": {"token": os.environ.get("TOKEN_SANATAN"), "category": "24", "tags": ["rahasya", "mythology"], "style": "mysterious, dark cinematic, divine, highly detailed, 8k masterpiece", "hooks": ["कैलाश पर्वत का अनसुलझा रहस्य", "अश्वत्थामा आज भी कहाँ हैं", "समुद्र मंथन का असली सच"]},
-    "BOOK_SUMMARIES": {"token": os.environ.get("TOKEN_BOOK"), "category": "27", "tags": ["books", "summary"], "style": "cinematic, inspiring, realistic, high quality, 8k, professional", "hooks": ["Atomic Habits: आदतें कैसे बदलें", "Rich Dad Poor Dad की असली सीख", "Power of Subconscious Mind"]}
+    "GB_YOUTUBER": {"token": os.environ.get("TOKEN_GBYOUTUBER"), "category": "22", "tags": ["bhakti", "krishna"], "style": "cinematic wide angle shot, beautiful environment, highly detailed scene, 8k, masterpiece", "hooks": ["श्री कृष्ण का सबसे बड़ा चमत्कार", "गीता का असली ज्ञान", "महाभारत का डरावना रहस्य"]},
+    "HEALTH_AYURVEDA": {"token": os.environ.get("TOKEN_HEALTH"), "category": "26", "tags": ["health", "ayurveda"], "style": "natural, realistic, wide angle shot, cinematic lighting, 8k, highly detailed environment", "hooks": ["एसिडिटी का 1 मिनट में जड़ से इलाज", "आयुर्वेद के 3 सबसे गुप्त नियम", "गर्म पानी पीने के खतरनाक फायदे"]},
+    "SUCCESS_BUSINESS": {"token": os.environ.get("TOKEN_SUCCESS"), "category": "27", "tags": ["business", "motivation"], "style": "professional, cinematic wide shot, realistic, 8k resolution, highly detailed", "hooks": ["रतन टाटा के सफलता के 5 नियम", "0 इन्वेस्टमेंट से करोड़पति कैसे बनें", "चाणक्य नीति"]},
+    "SANATAN_RAHASYA": {"token": os.environ.get("TOKEN_SANATAN"), "category": "24", "tags": ["rahasya", "mythology"], "style": "mysterious, dark cinematic, wide angle environment, ancient ruins, 8k masterpiece", "hooks": ["कैलाश पर्वत का अनसुलझा रहस्य", "अश्वत्थामा आज भी कहाँ हैं", "समुद्र मंथन का असली सच"]},
+    "BOOK_SUMMARIES": {"token": os.environ.get("TOKEN_BOOK"), "category": "27", "tags": ["books", "summary"], "style": "cinematic, inspiring, realistic wide angle shot, high quality, 8k, professional", "hooks": ["Atomic Habits: आदतें कैसे बदलें", "Rich Dad Poor Dad की असली सीख", "Power of Subconscious Mind"]}
 }
 
 def extract_json_safely(raw_text):
@@ -42,21 +42,24 @@ def extract_json_safely(raw_text):
     return match.group(0) if match else "{}"
 
 def get_scene_script(channel_name, hook_theme, is_long_video=False):
-    print(f"\n📝 {channel_name} के लिए दमदार कहानी लिखी जा रही है...")
-    word_limit = "400-450" if is_long_video else "130-150"
-    scene_count = 15 if is_long_video else 8
+    print(f"\n📝 {channel_name} के लिए एकदम असली और डीप कहानी लिखी जा रही है...")
+    
+    # 🟢 40 सेकंड की पक्की लिमिट
+    word_limit = "400-450" if is_long_video else "85-95"
+    scene_count = 15 if is_long_video else 5
     
     prompt = f"""Write a highly engaging, viral Hindi script for {channel_name}. THEME: "{hook_theme}".
-    Length: Strictly between {word_limit} words.
+    Length: STRICTLY between {word_limit} words.
     
-    CRITICAL STORY RULES (ANTI-BORING):
-    1. DO NOT write lists or keyword salads (e.g. "safalta ki raah, paise ki keemat"). You MUST tell a complete, flowing story with a beginning, middle, and end.
-    2. Start directly with a shocking hook. NO generic intros.
-    3. STRICT BAN: NEVER write the English words "dot", "comma", or "pause" in the Hindi text. Only use actual punctuation marks (। , ?).
-    4. END EXACTLY WITH: 'ऐसी ही अद्भुत जानकारी के लिए चैनल को अभी सब्सक्राइब करें।'
+    CRITICAL STORY RULES (NO GENERIC FLUFF):
+    1. DO NOT write repetitive, motivational fluff (e.g. "mehnat karo", "sapne pure karo").
+    2. You MUST tell a REAL, specific story or fact with actual details, names, or historical context.
+    3. Start immediately with a shocking hook. NO boring intros.
+    4. Write naturally. Do NOT forcefully insert commas after every few words.
+    5. END EXACTLY WITH: 'ऐसी ही अद्भुत जानकारी के लिए चैनल को अभी सब्सक्राइब करें।'
     
     VISUAL RULES:
-    1. The prompt MUST describe exactly what is happening in the story.
+    1. The prompt MUST describe a FULL SCENE (wide angle), not just a close-up face.
     2. Ensure exactly {scene_count} visual scenes.
     
     CAPTION RULES:
@@ -67,9 +70,9 @@ def get_scene_script(channel_name, hook_theme, is_long_video=False):
       "title": "Viral Clickbait Hindi Title",
       "scenes": [
         {{
-          "text": "Hindi spoken sentence with proper punctuation...", 
+          "text": "Hindi spoken sentence with natural flow...", 
           "caption": "SHORT ENGLISH", 
-          "prompt": "Epic highly detailed image prompt matching the story"
+          "prompt": "Epic highly detailed cinematic wide-angle scene prompt matching the story"
         }},
         ...
       ]
@@ -77,7 +80,8 @@ def get_scene_script(channel_name, hook_theme, is_long_video=False):
 
     url = "https://api.groq.com/openai/v1/chat/completions"
     headers = {"Authorization": f"Bearer {GROQ_KEY}", "Content-Type": "application/json"}
-    data = {"model": "llama-3.3-70b-versatile", "messages": [{"role": "user", "content": prompt}], "temperature": 0.8}
+    # Temperature 0.6 कर दिया है ताकि AI फालतू की बातें न रटे, सिर्फ टू-द-पॉइंट बात करे
+    data = {"model": "llama-3.3-70b-versatile", "messages": [{"role": "user", "content": prompt}], "temperature": 0.6}
     
     for attempt in range(5):
         try:
@@ -86,13 +90,10 @@ def get_scene_script(channel_name, hook_theme, is_long_video=False):
                 parsed = json.loads(extract_json_safely(res.json()['choices'][0]['message']['content']))
                 if parsed.get('scenes'):
                     full_text = " ".join([s['text'] for s in parsed['scenes']])
+                    word_count = len(full_text.split())
                     
-                    # 🟢 AI की चालाकी पकड़ने वाला फ़िल्टर
-                    if "डॉट" in full_text or "कॉमा" in full_text:
-                        print("⚠️ [रिजेक्ट] AI ने 'डॉट' शब्द लिख दिया। दोबारा लिखवा रहे हैं...")
-                        continue
-                    if len(full_text.split()) < 110 and not is_long_video:
-                        print("⚠️ [रिजेक्ट] कहानी बहुत छोटी है। दोबारा लिखवा रहे हैं...")
+                    if word_count > 115 and not is_long_video:
+                        print(f"⚠️ [रिजेक्ट] कहानी बहुत लंबी हो गई ({word_count} शब्द)। 45 सेकंड के लिए दोबारा लिखवा रहे हैं...")
                         continue
                         
                     return parsed
@@ -101,7 +102,7 @@ def get_scene_script(channel_name, hook_theme, is_long_video=False):
     raise Exception("🚨 AI Model Failed!")
 
 def download_single_image(idx, p, style_filter, w, h):
-    # 🟢 डायनामिक इमेज फ़िल्टर: चैनल के हिसाब से ही फोटो बनेगी
+    # 🟢 डायनामिक इमेज फ़िल्टर: अब सिर्फ Wide Angle और Full Scene वाली फोटो बनेगी
     enhanced_prompt = f"{p}, {style_filter}"
     url = f"https://image.pollinations.ai/prompt/{urllib.parse.quote(enhanced_prompt)}?width={w}&height={h}&nologo=true&seed={random.randint(10000,99999)}"
     fname = f"scene_{idx}.jpg"
@@ -121,7 +122,7 @@ def download_single_image(idx, p, style_filter, w, h):
     return None
 
 def fetch_all_images_safe(scenes, style_filter, is_long_video):
-    print("🎨 चैनल की थीम के अनुसार परफेक्ट तस्वीरें डाउनलोड हो रही हैं...")
+    print("🎨 चैनल की थीम के अनुसार चौड़ी और परफेक्ट तस्वीरें डाउनलोड हो रही हैं...")
     w, h = (1920, 1080) if is_long_video else (1080, 1920)
     valid_images, valid_scenes = [], []
     for i, s in enumerate(scenes):
@@ -134,12 +135,12 @@ def fetch_all_images_safe(scenes, style_filter, is_long_video):
     return valid_images, valid_scenes
 
 def create_human_voice(text, filename):
-    print("🎙️ एकदम साफ और दमदार आवाज़ बन रही है...")
+    print("🎙️ एकदम साफ, नेचुरल और दमदार आवाज़ बन रही है...")
     async def _generate():
         for _ in range(3):
             try:
-                # 🟢 आवाज़ की स्पीड +15% और वॉल्यूम +50%
-                communicate = edge_tts.Communicate(text, "hi-IN-MadhurNeural", rate="+15%", volume="+50%") 
+                # 🟢 आवाज़ की स्पीड एकदम सही (+5%) कर दी है ताकि झटके न लगें
+                communicate = edge_tts.Communicate(text, "hi-IN-MadhurNeural", rate="+5%", volume="+50%") 
                 await communicate.save(filename)
                 return True
             except: await asyncio.sleep(5)
@@ -153,7 +154,7 @@ def create_text_clip(caption_text, duration, is_long_video):
     img = Image.new('RGBA', (w, h), (0, 0, 0, 0))
     draw = ImageDraw.Draw(img)
     
-    font_size = 120 if is_long_video else 180
+    font_size = 120 if is_long_video else 170
     try: font = ImageFont.truetype("Roboto-Black.ttf", font_size)
     except: font = ImageFont.load_default()
     
@@ -246,7 +247,6 @@ def run_network():
                 hook_theme = random.choice(cfg['hooks'])
                 data = get_scene_script(ch_name, hook_theme, is_long)
                 
-                # 🟢 चैनल का स्टाइल फ़िल्टर पास किया जा रहा है
                 imgs, valid_scenes = fetch_all_images_safe(data['scenes'], cfg['style'], is_long)
                 
                 full_text = " ".join([s['text'] for s in valid_scenes])
