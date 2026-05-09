@@ -13,7 +13,7 @@ from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 import urllib.request
 
-print("🚀 V14 Anti-Spam & Perfect Scene Machine Active!")
+print("🚀 V15 Smart Balance Machine: No More Stuck Loops, 40s Perfect Timing!")
 os.system("sudo rm -f /etc/ImageMagick-6/policy.xml")
 
 font_path = "Roboto-Black.ttf"
@@ -27,7 +27,6 @@ GROQ_KEY = os.environ.get("GROQ_API_KEY")
 CLIENT_ID = "768932543756-hvbk02bm5avqesa1649892ufb73v11mq.apps.googleusercontent.com"
 CLIENT_SECRET = os.environ.get("GOOGLE_CLIENT_SECRET")
 
-# 🟢 NEW: Anti-Close-Up & Anti-Mixup Styles
 CHANNELS_CONFIG = {
     "GB_YOUTUBER": {"token": os.environ.get("TOKEN_GBYOUTUBER"), "category": "22", "tags": ["bhakti", "krishna"], "style": "extreme wide angle environment shot, full body, distant camera, NO extreme close up faces, beautiful mythological scenery, highly detailed, 8k", "hooks": ["श्री कृष्ण का सबसे बड़ा चमत्कार", "गीता का असली ज्ञान", "महाभारत का डरावना रहस्य"]},
     "HEALTH_AYURVEDA": {"token": os.environ.get("TOKEN_HEALTH"), "category": "26", "tags": ["health", "ayurveda"], "style": "wide angle shot, full scene, distant camera, natural realistic environment, NO extreme close up faces, 8k", "hooks": ["एसिडिटी का 1 मिनट में जड़ से इलाज", "आयुर्वेद के 3 सबसे गुप्त नियम", "गर्म पानी पीने के खतरनाक फायदे"]},
@@ -42,17 +41,17 @@ def extract_json_safely(raw_text):
 
 def get_scene_script(channel_name, hook_theme, is_long_video=False):
     print(f"\n📝 {channel_name} के लिए कहानी लिखी जा रही है...")
-    word_limit = "400-450" if is_long_video else "130-140"
+    word_limit = "400-450" if is_long_video else "120-130"
     scene_count = 15 if is_long_video else 6
     
     prompt = f"""You are an expert scriptwriter for the YouTube channel '{channel_name}'.
     THEME: "{hook_theme}".
     Length: Exactly between {word_limit} words.
 
-    CRITICAL INSTRUCTIONS (MUST FOLLOW):
-    1. NO MIXING TOPICS. Keep the story strictly 100% relevant to the specific channel '{channel_name}' and theme '{hook_theme}'.
-    2. TELL A REAL, SPECIFIC STORY. Use actual historical names, years, or mythological events. No generic advice.
-    3. The 'prompt' for images MUST explicitly ask for "Wide angle environment shot, full body, distant camera". NEVER ask for a close-up or portrait face.
+    CRITICAL INSTRUCTIONS:
+    1. NO MIXING TOPICS. Keep the story strictly relevant to '{channel_name}' and theme '{hook_theme}'.
+    2. TELL A REAL, SPECIFIC STORY. Use actual historical names, years, or mythological events.
+    3. The 'prompt' for images MUST explicitly ask for "Wide angle environment shot, full body, distant camera". NEVER ask for a close-up face.
     4. End exactly with: 'ऐसी ही अद्भुत जानकारी के लिए चैनल को अभी सब्सक्राइब करें।'
     
     JSON STRUCTURE EXAMPLE:
@@ -72,8 +71,7 @@ def get_scene_script(channel_name, hook_theme, is_long_video=False):
 
     url = "https://api.groq.com/openai/v1/chat/completions"
     headers = {"Authorization": f"Bearer {GROQ_KEY}", "Content-Type": "application/json"}
-    # 🟢 Temperature 0.3 कर दिया है ताकि AI फालतू बातें ना लिखे, सिर्फ असली कहानी बताए
-    data = {"model": "llama-3.3-70b-versatile", "messages": [{"role": "user", "content": prompt}], "temperature": 0.3}
+    data = {"model": "llama-3.3-70b-versatile", "messages": [{"role": "user", "content": prompt}], "temperature": 0.4}
     
     for attempt in range(5):
         try:
@@ -83,12 +81,16 @@ def get_scene_script(channel_name, hook_theme, is_long_video=False):
                 if parsed.get('scenes'):
                     full_text = " ".join([s['text'] for s in parsed['scenes']])
                     word_count = len(full_text.split())
-                    if word_count < 120 and not is_long_video:
+                    
+                    # 🟢 स्मार्ट बैलेंस: अब 95 शब्द से ऊपर की कहानी पास हो जाएगी (मशीन अटकेगी नहीं)
+                    if word_count < 95 and not is_long_video:
+                        print(f"⚠️ [रिजेक्ट] कहानी बहुत छोटी है ({word_count} शब्द)। दोबारा लिख रहा है...")
                         continue
+                        
                     return parsed
         except Exception as e:
             time.sleep(2)
-    raise Exception("🚨 AI Model Failed!")
+    raise Exception("🚨 AI Model Failed or Timeout!")
 
 def download_single_image(idx, p, style_filter, w, h):
     enhanced_prompt = f"{p}, {style_filter}"
@@ -109,6 +111,7 @@ def download_single_image(idx, p, style_filter, w, h):
     return None
 
 def fetch_all_images_safe(scenes, style_filter, is_long_video):
+    print("🎨 तस्वीरें डाउनलोड हो रही हैं...")
     w, h = (1920, 1080) if is_long_video else (1080, 1920)
     valid_images, valid_scenes = [], []
     for i, s in enumerate(scenes):
@@ -121,6 +124,7 @@ def fetch_all_images_safe(scenes, style_filter, is_long_video):
     return valid_images, valid_scenes
 
 def create_human_voice(text, filename):
+    print("🎙️ आवाज़ बन रही है...")
     async def _generate():
         for _ in range(3):
             try:
@@ -159,6 +163,7 @@ def create_text_clip(caption_text, duration, is_long_video):
     return ImageClip(fname).set_duration(duration)
 
 def assemble_video(image_files, scenes, output_vid, audio_file, is_long_video):
+    print(f"🎬 {'LONG VIDEO' if is_long_video else 'SHORTS'} Render हो रहा है...")
     main_audio = AudioFileClip(audio_file)
     dur_per_scene = main_audio.duration / len(image_files)
     clips = []
@@ -194,6 +199,7 @@ def assemble_video(image_files, scenes, output_vid, audio_file, is_long_video):
     final.close()
 
 def upload_video(token, filename, title, description, tags, category):
+    print("🚀 YouTube पर अपलोड हो रहा है...")
     for _ in range(3):
         try:
             creds = Credentials(token=None, refresh_token=token, client_id=CLIENT_ID, client_secret=CLIENT_SECRET, token_uri="https://oauth2.googleapis.com/token")
@@ -204,14 +210,18 @@ def upload_video(token, filename, title, description, tags, category):
                 media_body=MediaFileUpload(filename, chunksize=-1, resumable=True)
             )
             request.execute()
+            print("✅ Upload Success!")
             return
         except Exception as e:
+            print(f"⚠️ Upload fail, retrying... Error: {e}")
             time.sleep(10)
-    raise Exception("Upload failed.")
+    raise Exception("Upload failed completely.")
 
 def run_network():
     ist_time = datetime.utcnow() + timedelta(hours=5, minutes=30)
     is_long = True if ist_time.hour in [18, 19] else False 
+    
+    print(f"\n⚙️ Time: {ist_time.strftime('%I:%M %p')} | Mode: {'LONG' if is_long else 'SHORTS'}")
     
     channels = list(CHANNELS_CONFIG.keys())
     random.shuffle(channels)
@@ -237,6 +247,8 @@ def run_network():
                 time.sleep(30)
                 break 
             except Exception as e: 
+                # 🟢 अब अगर कोई एरर आएगा तो गिटहब लॉग में साफ़-साफ़ लाल रंग में छपेगा
+                print(f"🛑 Error in {ch_name} (Attempt {attempt+1}): {e}")
                 time.sleep(10)
 
 if __name__ == "__main__": 
