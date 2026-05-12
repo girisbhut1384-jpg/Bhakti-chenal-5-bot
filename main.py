@@ -13,7 +13,7 @@ from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 import urllib.request
 
-print("🚀 V20 Final Masterpiece: Human Voice, Strict Time Limits & Perfect Anatomy Active!")
+print("🚀 V21 Perfect Visual Match Machine: Exact Story Images & Human Voice Active!")
 os.system("sudo rm -f /etc/ImageMagick-6/policy.xml")
 
 font_path = "NotoSansDevanagari-Bold.ttf"
@@ -28,7 +28,7 @@ GROQ_KEY = os.environ.get("GROQ_API_KEY")
 CLIENT_ID = "768932543756-hvbk02bm5avqesa1649892ufb73v11mq.apps.googleusercontent.com"
 CLIENT_SECRET = os.environ.get("GOOGLE_CLIENT_SECRET")
 
-# 🟢 टेढ़े-मेढ़े हाथ-पैरों का पक्का इलाज (Anatomy Lock)
+# 🟢 एनाटॉमी लॉक (भूत जैसे चेहरे और हाथ-पैर रोकने के लिए)
 ANATOMY_FILTER = "anatomically correct, flawless face, perfectly drawn hands, symmetrical body, hyper-realistic, no deformities, clear facial features"
 
 CHANNELS_CONFIG = {
@@ -44,32 +44,36 @@ def extract_json_safely(raw_text):
     return match.group(0) if match else "{}"
 
 def get_scene_script(channel_name, hook_theme, is_long_video=False):
-    print(f"\n📝 {channel_name} के लिए इंसानों जैसी असली कहानी लिखी जा रही है...")
+    print(f"\n📝 {channel_name} के लिए कहानी और उससे मैच करती हुई फोटो का प्रॉम्प्ट बन रहा है...")
     current_time_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     rand_id = random.randint(100000, 999999)
     
-    # 🟢 लम्बाई का एकदम पक्का गणित: Shorts = 70-90 words, Long = 400-600 words
     word_limit = "400 to 550" if is_long_video else "70 to 85"
     scene_count = 15 if is_long_video else 5
 
+    # 🟢 ब्रह्मास्त्र: AI को सख्त निर्देश कि फोटो का प्रॉम्प्ट अंग्रेजी में और कहानी के बिल्कुल हिसाब से होना चाहिए!
     prompt = f"""[SYSTEM SEED: {current_time_str} - {rand_id}] 
     You are a viral scriptwriter for '{channel_name}'. THEME: "{hook_theme}".
     Length: You MUST write exactly between {word_limit} words total.
 
-    CRITICAL RULES FOR HUMAN VOICE & PERFECT IMAGES:
-    1. WRITE LIKE A REAL HUMAN. Use commas (,) and full stops (.) naturally so the AI voice takes breathing pauses. Do not sound robotic.
+    CRITICAL RULES FOR EXACT IMAGE MATCHING & VOICE:
+    1. WRITE LIKE A REAL HUMAN. Use commas (,) and full stops (.) naturally.
     2. NEVER WRITE BORING FACTS. Tell a highly specific, untold story.
-    3. The image 'prompt' MUST NOT contain complex human actions (no running, fighting, or lifting). Keep characters static, simple, and facing the camera to avoid anatomy deformities.
-    4. End the script exactly with: 'ऐसी ही अद्भुत जानकारी के लिए चैनल को अभी सब्सक्राइब करें।'
+    3. THE MOST IMPORTANT RULE: The 'prompt' for the image MUST BE IN ENGLISH and MUST EXACTLY MATCH what is happening in the 'text'. 
+       - If the text is about Ratan Tata, the prompt MUST say "Ratan Tata standing...". 
+       - If the text is about Lord Krishna, the prompt MUST say "Lord Krishna...".
+       - NEVER use generic placeholders like "Wide angle portrait". DESCRIBE THE EXACT SCENE IN ENGLISH.
+    4. Keep characters static and facing the camera to avoid bad anatomy.
+    5. End the script exactly with: 'ऐसी ही अद्भुत जानकारी के लिए चैनल को अभी सब्सक्राइब करें।'
     
-    JSON STRUCTURE:
+    JSON STRUCTURE (Follow this carefully):
     {{
       "title": "Viral Clickbait Title",
       "scenes": [
         {{
-          "text": "Human-like Hindi story text with natural commas...", 
-          "caption": "SHORT", 
-          "prompt": "Wide angle, simple portrait, highly detailed..."
+          "text": "1998 में रतन टाटा ने जब अपनी पहली कार...", 
+          "caption": "RATAN TATA", 
+          "prompt": "Ratan Tata standing in a boardroom, serious expression, highly detailed, wide angle"
         }}
       ]
     }}
@@ -85,11 +89,10 @@ def get_scene_script(channel_name, hook_theme, is_long_video=False):
             if res.status_code == 200:
                 parsed = json.loads(extract_json_safely(res.json()['choices'][0]['message']['content']))
                 if parsed.get('scenes'): 
-                    # 🟢 लम्बाई की सख्त चेकिंग
                     full_text = " ".join([s['text'] for s in parsed['scenes']])
                     word_count = len(full_text.split())
                     if not is_long_video and (word_count < 65 or word_count > 100):
-                        print(f"⚠️ [रिजेक्ट] शब्द सीमा गलत है ({word_count})। 30-40 सेकंड के लिए दोबारा लिख रहा है...")
+                        print(f"⚠️ [रिजेक्ट] शब्द सीमा गलत है ({word_count})। दोबारा लिख रहा है...")
                         time.sleep(5)
                         continue
                     return parsed
@@ -99,6 +102,7 @@ def get_scene_script(channel_name, hook_theme, is_long_video=False):
 
 def download_single_image(idx, p, style_filter, w, h):
     seed_value = random.randint(1000000, 9999999)
+    # 🟢 फोटो के प्रॉम्प्ट को मज़बूत बनाया है ताकि कहानी का किरदार ही दिखे
     enhanced_prompt = f"{p}, {style_filter}"
     url = f"https://image.pollinations.ai/prompt/{urllib.parse.quote(enhanced_prompt)}?width={w}&height={h}&nologo=true&enhance=true&seed={seed_value}"
     
@@ -115,7 +119,7 @@ def download_single_image(idx, p, style_filter, w, h):
     return None
 
 def fetch_all_images_safe(scenes, style_filter, is_long_video):
-    print("🎨 साफ-सुथरी और असली दिखने वाली तस्वीरें डाउनलोड हो रही हैं...")
+    print("🎨 कहानी से 100% मैच करने वाली तस्वीरें डाउनलोड हो रही हैं...")
     w, h = (1920, 1080) if is_long_video else (1080, 1920)
     valid_images, valid_scenes = [], []
     for i, s in enumerate(scenes):
@@ -131,7 +135,6 @@ def create_human_voice(text, filename):
     async def _generate():
         for _ in range(3):
             try:
-                # 🟢 आवाज़ की स्पीड एकदम नॉर्मल कर दी है ताकि रोबोट जैसा न लगे
                 communicate = edge_tts.Communicate(text, "hi-IN-MadhurNeural", rate="+0%", volume="+50%") 
                 await communicate.save(filename)
                 return True
