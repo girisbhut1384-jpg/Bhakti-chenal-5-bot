@@ -24,7 +24,8 @@ if not os.path.exists(font_path):
 
 GROQ_KEY = os.environ.get("GROQ_API_KEY")
 ELEVENLABS_KEY = os.environ.get("ELEVENLABS_API_KEY") 
-CLIENT_ID = "768932543756-hvbk02bm5avqesa1649892ufb73v11mq.apps.googleusercontent.com"
+# यहाँ आपकी नई WEB CLIENT ID अपडेट कर दी गई है
+CLIENT_ID = "768932543756-7e17ufdmt7r67urc9krua7t69vps6h57.apps.googleusercontent.com"
 CLIENT_SECRET = os.environ.get("GOOGLE_CLIENT_SECRET")
 
 ANATOMY_FILTER = "anatomically correct, flawless face, perfectly drawn hands, symmetrical body, hyper-realistic, no deformities, clear facial features, 8k resolution, cinematic lighting"
@@ -211,7 +212,7 @@ def upload_video(token, filename, title, description, tags, category):
         print("✅ सफलता! वीडियो लाइव हो गया है।")
     except Exception as e: 
         print(f"❌ YouTube Upload Fail: {e}")
-        print("⚠️ ध्यान दें: अगर 'invalid_client' लिखा है, तो Google Cloud में आपका Client Secret बदल गया है या एक्सपायर हो गया है। नया Secret गिटहब में डालें।")
+        print("⚠️ ध्यान दें: अगर 'invalid_client' लिखा है, तो Google Cloud में आपका Client Secret बदल गया है। नया Secret गिटहब में डालें।")
 
 def run_network():
     ist_now = datetime.utcnow() + timedelta(hours=5, minutes=30)
