@@ -2,7 +2,7 @@ name: 10-Channel Super-Fast Auto-Uploader
 
 on:
   schedule:
-    # यह मशीन भारतीय समयानुसार दिन में 4 बार चलेगी
+    # यह मशीन भारतीय समयानुसार हर 6 घंटे में दिन में 4 बार चलेगी
     - cron: '0 1,7,13,19 * * *'
   workflow_dispatch:
 
