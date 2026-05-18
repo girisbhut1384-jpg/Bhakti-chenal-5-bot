@@ -1,8 +1,8 @@
-name: 5-Channel Super-Fast Auto-Uploader
+name: 10-Channel Super-Fast Auto-Uploader
 
 on:
   schedule:
-    # भारतीय समय: सुबह 6:30, दोपहर 12:30, शाम 6:30 (Long), रात 12:30
+    # यह मशीन भारतीय समयानुसार दिन में 4 बार चलेगी
     - cron: '0 1,7,13,19 * * *'
   workflow_dispatch:
 
@@ -21,20 +21,13 @@ jobs:
       - name: Install System Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y imagemagick ffmpeg
+          sudo apt-get install -y imagemagick ffmpeg fonts-deva
+          sudo rm -f /etc/ImageMagick-6/policy.xml
 
       - name: Install Python Libraries
         run: |
           pip install requests edge-tts moviepy==1.0.3 pillow google-api-python-client google-auth google-auth-oauthlib google-auth-httplib2
 
-      - name: Run Master Machine
-        env:
-          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
-          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
-          TOKEN_GBYOUTUBER: ${{ secrets.TOKEN_GBYOUTUBER }}
-          TOKEN_HEALTH: ${{ secrets.TOKEN_HEALTH }}
-          TOKEN_SUCCESS: ${{ secrets.TOKEN_SUCCESS }}
-          TOKEN_SANATAN: ${{ secrets.TOKEN_SANATAN }}
-          TOKEN_BOOK: ${{ secrets.TOKEN_BOOK }}
+      - name: Run 10-Channel Master Machine
         run: |
           python main.py
