@@ -1,8 +1,8 @@
-name: 10-Channel Super-Fast Auto-Uploader
+name: 5-Channel Super-Fast Auto-Uploader
 
 on:
   schedule:
-    # यह मशीन भारतीय समयानुसार हर 6 घंटे में दिन में 4 बार चलेगी
+    # यह मशीन भारतीय समयानुसार दिन में 4 बार चलेगी (सुबह 6:30, दोपहर 12:30, शाम 6:30, रात 12:30)
     - cron: '0 1,7,13,19 * * *'
   workflow_dispatch:
 
@@ -28,6 +28,6 @@ jobs:
         run: |
           pip install requests edge-tts moviepy==1.0.3 pillow google-api-python-client google-auth google-auth-oauthlib google-auth-httplib2
 
-      - name: Run 10-Channel Master Machine
+      - name: Run Master Machine
         run: |
           python main.py
