@@ -1,33 +1,33 @@
-name: 5-Channel Super-Fast Auto-Uploader
+name: Auto YouTube Shorts Generator
 
 on:
   schedule:
-    # यह मशीन भारतीय समयानुसार दिन में 4 बार चलेगी (सुबह 6:30, दोपहर 12:30, शाम 6:30, रात 12:30)
-    - cron: '0 1,7,13,19 * * *'
+    - cron: '0 */6 * * *'
   workflow_dispatch:
 
 jobs:
   build_and_upload:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
+    - name: Checkout Repository
+      uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
 
-      - name: Install System Dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y imagemagick ffmpeg fonts-deva
-          sudo rm -f /etc/ImageMagick-6/policy.xml
+    - name: Install System Dependencies (ImageMagick, Fonts)
+      run: |
+        sudo apt-get update -y
+        sudo apt-get install -y imagemagick fonts-indic fonts-noto-core libraqm-dev
+        sudo rm -f /etc/ImageMagick-6/policy.xml
+        sudo rm -f /etc/ImageMagick-7/policy.xml
 
-      - name: Install Python Libraries
-        run: |
-          pip install requests edge-tts moviepy==1.0.3 pillow google-api-python-client google-auth google-auth-oauthlib google-auth-httplib2
+    - name: Install Python Libraries
+      run: |
+        pip install requests edge-tts moviepy==1.0.3 pillow==9.5.0 google-api-python-client google-auth-oauthlib google-auth-httplib2 urllib3==1.26.15
 
-      - name: Run Master Machine
-        run: |
-          python main.py
+    - name: Run Video Generator Script
+      run: python main.py
