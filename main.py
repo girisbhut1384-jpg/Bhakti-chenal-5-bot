@@ -1,5 +1,5 @@
 # ==============================================================================
-# 👑 V39 THE ULTIMATE EMPIRE ENGINE (100% COMPLETE & UNBREAKABLE)
+# 👑 V41 PURE OBJECT ENGINE: NO NEGATIVE PROMPTS, 100% STILL-LIFE VISUALS
 # ==============================================================================
 
 import os
@@ -21,26 +21,21 @@ if not hasattr(Image, 'Resampling'):
     Image.Resampling = getattr(Image, 'LANCZOS', 1)
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
-
 from moviepy.editor import ImageClip, AudioFileClip, concatenate_videoclips, CompositeVideoClip
 
-print("🔓 V39 Ultimate Engine: 100% Complete Setup Started...")
+print("🔓 V41 Pure Object Engine: Positive Still-Life Setup Started...")
 
-# लिनक्स सर्वर पर इमेज प्रोसेसिंग की परमिशन ठीक करना
 os.system("sudo rm -f /etc/ImageMagick-6/policy.xml")
 os.system("sudo rm -f /etc/ImageMagick-7/policy.xml")
 
-# फॉन्ट डाउनलोड करना (कैप्शन्स के लिए)
 font_path = "Roboto-Black.ttf"
 if not os.path.exists(font_path):
     os.system("wget -qO Roboto-Black.ttf https://github.com/google/fonts/raw/main/apache/roboto/Roboto-Black.ttf")
 
-# 🔑 सुरक्षित API Keys (एंटी-स्कैनर स्प्लिट)
 GROQ_KEY = "gsk_x1ThbfTdXoyFdlWkW5gT" + "WGdyb3FY4sGNe3aEAulVCEVOlXtI0lCz"
 CLIENT_ID = "768932543756-ndfvqmbb0p7ffa1r1cg6bmmuimim98n6.apps.googleusercontent.com"
 CLIENT_SECRET = "GOCSPX-" + "__q2fG3cAhPWL0xjrbIEG2fk_T48"
 
-# 🔑 5 चैनलों के टोकन 
 TOKENS = {
     "GB YOUTUBER": "1//04Yw4AZp47TkeCgYIARAAGAQSNwF-" + "L9IrX5ZcptNraLK2IX1nxWfwJZI7M_QYYaMSD1du-0_nokcboxQaTZQoN5XsQq7a3Ise7ho",
     "HEALTH & AYURVEDA": "1//04YIai_athiwVCgYIARAAGAQSNwF-" + "L9Irkq4Y5Rc2z_b_tybVROarlZNAiTNgxfw4Eg_gzO7Pqyys-TBXm1apTEhbUDksk8fAbTc",
@@ -49,17 +44,16 @@ TOKENS = {
     "BOOK SUMMARY": "1//04ud4vnSb-qXRCgYIARAAGAQSNwF-" + "L9Ir2EmUvUfiuJ7SbqK1IJwk11-Jd0D6UTERpwBPO5FlFd3ZIJ1M08sTjh1dtcYhrKQZ-5M"
 }
 
-# --- हर चैनल के लिए कड़क और सस्पेंस-भरे हुक्स ---
+# हुक्स को इस तरह डिज़ाइन किया गया है कि इंसान की ज़रूरत ही न पड़े
 HOOKS = {
-    "GB YOUTUBER": ["महाभारत ग्रंथ में छुपा एक ऐसा गुप्त सत्य जो आज भी कलयुग के भविष्य को नियंत्रित कर रहा है", "श्री कृष्ण और देवताओं से जुड़ा एक ऐसा खौफनाक और अनसुलझा सच जिसे सदियों से छिपाया गया", "श्रीमद्भगवद्गीता का वो अंतिम और गुप्त उपदेश जो मनुष्य की सोई हुई चेतना को तुरंत जगा देता है"],
-    "HEALTH & AYURVEDA": ["आयुर्वेद के प्राचीन ग्रंथ 'चरक संहिता' में लिखा वो एक कड़ा नियम जो शरीर की हर बीमारी को जड़ से मिटा दे", "तांबे और मिट्टी के बर्तनों में छिपे विज्ञान का वो सच जो आज के आधुनिक मेडिकल साइंस को भी हैरान करता है", "सुबह खाली पेट पानी पीने की वो एक भयंकर गलती जो १० साल पहले ही बुढ़ापा ला देती है"],
-    "BUSINESS & MOTIVATION": ["चाणक्य नीति का वो एक गुप्त और कड़ा आर्थिक नियम जो किसी भी डूबते हुए व्यापार को साम्राज्य बना दे", "प्राचीन भारत के सबसे अमीर व्यापारियों का वो गुप्त धन चक्रव्यूह जिससे लक्ष्मी हमेशा उनके पास खिंची चली आती थी", "धीरूभाई अंबानी का वो एक गुप्त निर्णय जिसने भारतीय बाजार की पूरी कहानी ही बदल दी"],
-    "SANATAN RAHASYA": ["प्राचीन भारतीय मंदिरों की वास्तुकला और पत्थरों के पीछे छिपा वो एडवांस विज्ञान जिसे नासा भी मानता है", "हजारों साल पुराने वेदों में लिखे भूगोल और ब्रह्मांड के वो रहस्य जो आज की साइंस धीरे-धीरे खोज रही है", "सनातन संस्कृति के एक ऐसे गुप्त और अदृश्य मंदिर का सच जिसकी चुंबकीय शक्ति विज्ञान को डराती है"],
-    "BOOK SUMMARY": ["प्राचीन हस्तलिपियों में छिपा इंसानी मस्तिष्क को वश में करने का वो एक गहरा और अचूक मनोवैज्ञानिक नियम", "दुनिया की सबसे रहस्यमयी और गुप्त किताब में लिखा वो खतरनाक सच जिसे पढ़ने वाले पागल हो गए", "दिमाग को १०० गुना तेज करने का वो एक वैज्ञानिक और प्रामाणिक तरीका जिसे सदियों से छिपाया गया"]
+    "GB YOUTUBER": ["कुरुक्षेत्र की मिट्टी में आज भी दबा है एक ऐसा दिव्य अस्त्र जिसे विज्ञान भी नहीं समझ पाया", "समुद्र की गहराइयों में डूबी उस स्वर्ण नगरी के अवशेषों का रहस्य जो अचानक गायब हो गई", "एक ऐसा रहस्यमयी प्राचीन ग्रंथ जिसके पन्ने आज भी अंधेरे में चमकते हैं"],
+    "HEALTH & AYURVEDA": ["हिमालय की वादियों में उगने वाली वो नीली जड़ी-बूटी जो उम्र के पहिये को रोक देती है", "तांबे के पुराने घड़े में रखा वो जादुई जल जो शरीर के हर विष को बाहर निकाल देता है", "आयुर्वेद की उस गुप्त औषधि का सच जो रातों-रात शरीर की असीमित ऊर्जा को जगा देती है"],
+    "BUSINESS & MOTIVATION": ["दुनिया की सबसे सुरक्षित तिजोरी में रखे वो गुप्त सोने के सिक्के जिन्होंने अर्थव्यवस्था पलट दी", "शेयर बाज़ार को हिला देने वाले उस रहस्यमयी प्राचीन दस्तावेज़ का सच", "अरबपतियों के उस गुप्त चक्रव्यूह का प्रतीक जिसे आजतक कोई नहीं तोड़ पाया"],
+    "SANATAN RAHASYA": ["उस प्राचीन शिवलिंग का सच जिसके अंदर से आज भी एक रहस्यमयी ऊर्जा निकलती है", "कैलाश पर्वत की बर्फ में छिपे उस नीले प्रकाश का सच जिसे नासा ने भी देखा", "हजारों साल पुरानी उस पत्थर की मशीन का रहस्य जो आज भी तारों की गणना करती है"],
+    "BOOK SUMMARY": ["इतिहास के सबसे अंधेरे कोने में छुपी वो किताब जिसके अक्षर छूने पर रंग बदलते हैं", "उस प्राचीन सुनहरे पन्ने का रहस्य जिसे पढ़ने से दिमाग की क्षमता १०० गुना हो जाती है", "एक ऐसा जादुई ताला जिसे आजतक किसी भी चाबी से नहीं खोला जा सका"]
 }
 
 def extract_json_safely(raw_text):
-    # JSON को सुरक्षित तरीके से निकालना
     match = re.search(r'\{[\s\S]*\}', str(raw_text).strip())
     return match.group(0) if match else "{}"
 
@@ -70,22 +64,25 @@ def get_complete_script(channel_name):
     
     prompt = f"""You are an elite Documentary Scriptwriter for '{channel_name}'. Theme: "{hook}". Unique Seed: {unique_seed}
     
-    CRITICAL QUALITY & VALUE RULES:
-    1. WRITE LIKE A HUMAN: Do NOT write robotic, repetitive sentences. Write deep, authentic, grammatically flawless Devanagari Hindi. Tell a gripping story.
-    2. COMPLETE KNOWLEDGE: If you mention a mystery, a mantra, a rule, or a method, you MUST completely explain and name that specific knowledge within the script. The audience must gain clear knowledge.
-    3. TARGET LENGTH: Provide exactly 8 comprehensive sentences. Total word count MUST be between 110-125 words. The voiceover must reach 45-55 seconds.
-    4. NO BANNED WORDS: Do NOT use generic intros like "क्या आप जानते हैं", "दोस्तों". Start directly with the core fact.
+    CRITICAL SCRIPT RULES:
+    1. WRITE LIKE A HUMAN: Write deep, authentic, grammatically flawless Devanagari Hindi. Tell a gripping story.
+    2. COMPLETE KNOWLEDGE: Completely explain the mystery/rule/fact within the script. No cliffhangers.
+    3. TARGET LENGTH: Exactly 8 comprehensive sentences. Word count: 110-125 words for a 45-55 seconds video.
+    4. NO BANNED WORDS: Do NOT use "क्या आप जानते हैं", "दोस्तों". Start directly with the core fact.
     5. MANDATORY ENDING: Sentence 8 MUST end exactly with: 'ऐसे ही प्रामाणिक और अद्भुत ज्ञान के लिए चैनल को अभी सब्सक्राइब करें।'
     
-    STRICT ZERO-FACE IMAGE RULES:
-    6. IMAGE SYNC & NO HUMANS: Create 8 descriptive English image prompts. Each MUST perfectly visualize the exact action or thought in its respective sentence. Focus purely on epic object-based visual elements (e.g., ancient scrolls, glowing stellar scripts, macro shots of Ayurvedic herbs, ancient copper plate inscriptions). ABSOLUTELY NO HUMANS, NO FACES, NO MODERN PEOPLE, NO GIRLS.
+    🔥 ABSOLUTE "STILL LIFE" RULE FOR IMAGE PROMPTS 🔥:
+    6. YOU MUST NEVER USE NEGATIVE PROMPTS LIKE "NO HUMANS" OR "NO FACES". The AI generator misunderstands them.
+    7. INSTEAD, ONLY describe beautiful, empty, inanimate STILL LIFE photography.
+    8. BANNED PROMPT WORDS: Krishna, Shiva, God, Arjuna, King, Man, Woman, Billionaire, Doctor, Scientist, Face, Human, Person, Boy, Girl. (DO NOT USE THESE).
+    9. EXAMPLES OF GOOD PROMPTS: "A macro close-up of a glowing golden peacock feather resting on an ancient manuscript", "A majestic empty stone temple glowing with mysterious blue light", "A stack of golden coins inside a futuristic empty dark vault", "A glowing green ayurvedic leaf floating in pure water".
     
     Return ONLY valid JSON format exactly like this: 
     {{
       "topic": "complete valuable topic",
       "script": "Flowing, 100-120 word Hindi story with complete factual knowledge...",
       "captions": ["Caption 1", "Caption 2", "Caption 3", "Caption 4", "Caption 5", "Caption 6", "Caption 7", "Caption 8"],
-      "prompts": ["Prompt 1 (NO HUMANS)", "Prompt 2 (NO HUMANS)", "Prompt 3 (NO HUMANS)", "Prompt 4 (NO HUMANS)", "Prompt 5 (NO HUMANS)", "Prompt 6 (NO HUMANS)", "Prompt 7 (NO HUMANS)", "Prompt 8 (NO HUMANS)"]
+      "prompts": ["Still life prompt 1", "Still life prompt 2", "Still life prompt 3", "Still life prompt 4", "Still life prompt 5", "Still life prompt 6", "Still life prompt 7", "Still life prompt 8"]
     }}
     """
     
@@ -98,7 +95,7 @@ def get_complete_script(channel_name):
             res = requests.post(url, headers=headers, json=data, timeout=60).json()
             parsed = json.loads(extract_json_safely(res['choices'][0]['message']['content']))
             if parsed.get('script') and len(parsed.get('prompts', [])) == 8:
-                print("🎯 Factual Script & Face-Free Prompts Generated!")
+                print("🎯 Factual Script & STRICT STILL-LIFE Prompts Generated!")
                 return parsed
         except Exception as e:
             time.sleep(3)
@@ -107,12 +104,12 @@ def get_complete_script(channel_name):
 def fetch_zero_face_visuals(prompts):
     image_files = []
     base_seed = random.randint(1000, 99999)
-    print("🎨 Generating 8K High-Quality Face-Free Masterpieces...")
+    print("🎨 Generating 8K High-Quality Still-Life Masterpieces...")
     
     headers = {"User-Agent": "Mozilla/5.0"}
     for i, p in enumerate(prompts):
-        # सबसे कड़ा एंटी-फेस प्रॉम्प्ट
-        enhanced = f"{p}, 8k resolution, photorealistic cinematic lighting, ultra-detailed textures, highly coherent, mysterious atmosphere, STRICTLY NO HUMANS, NO FACES, NO PEOPLE, pure object photography, masterpiece"
+        # यहाँ प्रॉम्प्ट में सिर्फ़ पॉजिटिव शब्द डाले गए हैं (Empty scene, still life)
+        enhanced = f"{p}, 8k resolution, photorealistic cinematic lighting, ultra-detailed macro photography, dark empty background, pure still life photography, masterpiece"
         url = f"https://image.pollinations.ai/prompt/{urllib.parse.quote(enhanced)}?width=1080&height=1920&nologo=true&seed={base_seed+i}"
         fname = f"scene_{i}.jpg"
         
@@ -122,7 +119,7 @@ def fetch_zero_face_visuals(prompts):
                 if res.status_code == 200 and len(res.content) > 15000:
                     with open(fname, "wb") as f: f.write(res.content)
                     image_files.append(fname)
-                    print(f"   ✅ Visual {i+1}/8 (Face-Free Verified) Ready!")
+                    print(f"   ✅ Still-Life Visual {i+1}/8 Ready!")
                     break
             except: pass
             time.sleep(3)
@@ -134,7 +131,6 @@ def create_smooth_human_voice(text, filename):
     async def _generate():
         for _ in range(3):
             try:
-                # -4% स्पीड से आवाज़ में ठहराव और गहराई आती है
                 communicate = edge_tts.Communicate(text, "hi-IN-MadhurNeural", rate="-4%", volume="+60%") 
                 await communicate.save(filename)
                 return True
@@ -148,10 +144,10 @@ def create_centered_text_clip(text, duration):
     canvas_w, canvas_h = 1080, 800
     img = Image.new('RGBA', (canvas_w, canvas_h), (0, 0, 0, 0))
     draw = ImageDraw.Draw(img)
-    try: font = ImageFont.truetype(font_path, 140) 
+    try: font = ImageFont.truetype(font_path, 130) 
     except: font = ImageFont.load_default()
     
-    wrapped_text = textwrap.fill(text.upper(), width=14) 
+    wrapped_text = textwrap.fill(text.upper(), width=16) 
     try:
         bbox = draw.multiline_textbbox((0, 0), wrapped_text, font=font, align='center')
         text_w, text_h = bbox[2] - bbox[0], bbox[3] - bbox[1]
@@ -197,10 +193,8 @@ def build_perfect_video(script, image_files, captions, output_vid):
         process_image_for_video(img_path, fixed_img_path)
         base_clip = ImageClip(fixed_img_path)
         
-        # ज़ूम इफ़ेक्ट (सस्पेंस के लिए)
         zoomed_clip = base_clip.resize(lambda t: 1 + 0.04 * (t / time_per_image)).set_duration(time_per_image)
         
-        # परफेक्ट सेंटर-बॉटम यूआई अलाइनमेंट (0.45) ताकि यूट्यूब बटन्स के पीछे न छुपे
         cap_text = captions[i] if i < len(captions) else ""
         if cap_text.strip():
             try:
@@ -254,15 +248,14 @@ if __name__ == "__main__":
             
             build_perfect_video(script, image_files, captions, final_name)
             
-            # एफिलिएट लिंक के साथ प्रीमियम डिस्क्रिप्शन
             desc = f"🔥 👉 ऐसे ही प्रामाणिक रहस्यों और ज्ञान के लिए चैनल को अभी सब्सक्राइब करें!\n\n{script}\n\n🔗 Best Deals & Offers: https://www.amazon.in/?tag=girishbhut07-21"
             title = f"🤯 {content['topic']} #shorts"
             
             upload_to_empire(token, final_name, title[:95], desc, tags, cat_id)
-            print(f"✅ {name} Video Successfully LIVE (Perfect Content + Captions)!")
+            print(f"✅ {name} Video Successfully LIVE (Positive Object-Only Visuals)!")
             time.sleep(15)
             
         except Exception as e:
             print(f"🛑 Empire Error on {name}: {e}. Skipping to next channel.")
 
-     print("\n🏆 साम्राज्य ऑपरेशन सक्सेसफुल! 100% ऑटोमेटेड, नो-फेस परफेक्ट वीडियो लाइव हो चुके हैं बॉस!")
+     print("\n🏆 साम्राज्य ऑपरेशन सक्सेसफुल! बिना किसी चेहरे के 100% परफेक्ट वीडियो लाइव हो चुके हैं!")
