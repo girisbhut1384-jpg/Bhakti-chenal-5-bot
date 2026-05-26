@@ -1,5 +1,5 @@
 # ==============================================================================
-# 👑 V42 THE PROMPT MASTER ENGINE: 100% AUTOMATIC, SAFE & STRICTLY STRUCTURED
+# 👑 V43 THE ELITE SYSTEM PROMPT ENGINE: 100% AUTOMATIC, SAFE & STRICT
 # ==============================================================================
 
 import os, sys, requests, asyncio, edge_tts, time, urllib.parse, json, random, re, textwrap, io
@@ -9,7 +9,7 @@ if not hasattr(Image, 'Resampling'): Image.Resampling = getattr(Image, 'LANCZOS'
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 from moviepy.editor import ImageClip, AudioFileClip, concatenate_videoclips, CompositeVideoClip
 
-print("🔓 V42 Prompt Master Engine: Structured & Safe Setup Started...")
+print("🔓 V43 Elite System Prompt Engine: Viral Content Setup Started...")
 
 os.system("sudo rm -f /etc/ImageMagick-6/policy.xml")
 os.system("sudo rm -f /etc/ImageMagick-7/policy.xml")
@@ -28,13 +28,13 @@ TOKENS = {
     "BOOK SUMMARY": "1//04ud4vnSb-qXRCgYIARAAGAQSNwF-" + "L9Ir2EmUvUfiuJ7SbqK1IJwk11-Jd0D6UTERpwBPO5FlFd3ZIJ1M08sTjh1dtcYhrKQZ-5M"
 }
 
-# चैनल के हिसाब से Niche सेट करना
+# आपके प्रॉम्प्ट के अनुसार चैनल की Niche सेट की गई है
 NICHES = {
-    "GB YOUTUBER": "Spirituality & Ancient Wisdom (Focus on Mahabharata/Gita)",
+    "GB YOUTUBER": "Spirituality & Ancient Wisdom (Focus on Mahabharata and Gita)",
     "HEALTH & AYURVEDA": "Ayurveda & Home Remedies",
-    "BUSINESS & MOTIVATION": "Personal Finance & Business Mastery",
-    "SANATAN RAHASYA": "Spirituality & Ancient Indian Science",
-    "BOOK SUMMARY": "Self-Help Book Summaries (Dark Psychology/Mindset)"
+    "BUSINESS & MOTIVATION": "Business, Motivation & Personal Finance",
+    "SANATAN RAHASYA": "Spirituality & Ancient Indian Facts",
+    "BOOK SUMMARY": "Real Book Summaries & Life Lessons"
 }
 
 def extract_json_safely(raw_text):
@@ -43,35 +43,38 @@ def extract_json_safely(raw_text):
 
 def get_master_script(channel_name):
     niche = NICHES[channel_name]
-    print(f"\n📝 Executing Master Prompt for {channel_name} (Niche: {niche})...")
+    print(f"\n📝 Executing Viral System Prompt for {channel_name} (Niche: {niche})...")
     
-    # आपका दिया हुआ मास्टर प्रॉम्प्ट (AI के लिए सख्त नियम)
-    prompt = f"""You are an expert YouTube Shorts Scriptwriter and Viral Content Strategist. Your task is to write a highly engaging, 45-50 second Short script in Hindi.
+    # आपका दिया हुआ "सिस्टम प्रॉम्प्ट" (AI के लिए सख्त नियम)
+    prompt = f"""You are an elite YouTube Shorts Scriptwriter and Viral Content Expert. Your only job is to write a highly engaging, 45-50 second script in Hindi that guarantees high audience retention.
+
     Target Niche: {niche}
-    
-    Strict Rules to Follow:
-    - Title Generation: Create a unique, highly clickable Hindi title (under 50 chars). DO NOT use the same emoji repeatedly. Use 1-2 relevant emojis at the end.
-    - Niche-Specific Safety Rules:
-      - If Finance: NEVER use words like 'Guaranteed Profit', 'Double your money'. Focus on 'Financial Education', 'Smart Habits', and 'Wealth Building'.
-      - If Ayurveda/Health: NEVER claim to 100% cure a serious medical condition. Focus on 'Wellness', 'Daily Habits', and 'Ancient Secrets'.
-      - If Book Summary: Do not summarize the whole book. Focus on just ONE mind-blowing lesson or rule.
-      - If Spirituality: Keep the tone respectful, deep, and factual. Talk about hidden meanings, energy, and life lessons.
-    - The Hook (0-3 Seconds): Start with a massive pattern-interrupt. Bust a common myth, or state a shocking fact to stop the scroll immediately.
-    - The Body (3-40 Seconds): Provide fast-paced, high-value information. Keep sentences short and punchy.
-    - Call to Action (CTA): The CTA MUST only be: 'ऐसी ही बेहतरीन जानकारी के लिए चैनल को अभी सब्सक्राइब करें।'
+
+    CRITICAL RULES YOU MUST OBEY:
+    1. Title Generation: Keep it under 50 characters. NEVER start the title with the "🤯" emoji. Place 1-2 relevant emojis ONLY at the very end of the title.
+    2. The Script Structure: Write EXACTLY 8 sentences total.
+       - Sentence 1 (The Hook: 0-3 Seconds): You MUST start with a shocking pattern-interrupt. Use opening lines like: "क्या आप जानते हैं...", "99% लोग यह गलती करते हैं...", or state a mind-blowing, specific fact. NO boring or slow intros.
+       - Sentences 2-7 (The Body): Provide fast-paced, high-value information. 
+         * If Book Summary: You MUST name a REAL, famous self-help/business book (e.g., Atomic Habits, Rich Dad Poor Dad). Explain exactly ONE real principle from it. Absolutely NO fake, fantasy, or made-up stories.
+         * If Ayurveda/Health: Share one specific, practical remedy with real ingredients (e.g., naming specific herbs or daily habits). NEVER claim to 100% cure a serious medical condition.
+         * If Business/Motivation: Share a real-world psychological fact or specific actionable advice. NEVER use words like 'Guaranteed Profit', 'Double your money'.
+         * If Spirituality: Explain a specific ancient concept, text, or energy principle clearly. Keep it respectful, deep, and factual.
+         * GENERAL RULE: Give solid, factual value. DO NOT repeat the same point in different words. NEVER use filler sentences.
+       - Sentence 8 (CTA): Your script MUST end exactly with this line: "ऐसी ही बेहतरीन जानकारी के लिए चैनल को अभी सब्सक्राइब करें।"
+    3. Output Language: The script MUST be entirely in fluent, natural-sounding Hindi.
 
     🔥 ABSOLUTE "STILL LIFE" RULE FOR IMAGE PROMPTS (CRITICAL) 🔥:
-    - You must create EXACTLY 8 distinct sentences for the script (Hook = 1, Body = 6, CTA = 1).
-    - For EACH sentence, create an English image prompt describing ONLY beautiful, empty, inanimate STILL LIFE photography.
+    - For EACH of the 8 sentences, create an English image prompt describing ONLY beautiful, empty, inanimate STILL LIFE photography.
     - BANNED PROMPT WORDS: Krishna, Shiva, God, Arjuna, King, Man, Woman, Billionaire, Doctor, Scientist, Face, Human, Person, Boy, Girl. (DO NOT USE THESE).
     - YOU MUST ONLY DESCRIBE INANIMATE OBJECTS & NATURE. Example: "A glowing ancient copper manuscript on a dark stone table".
     
-    Output Format Expected (Strict JSON):
+    Return ONLY valid JSON format exactly like this:
     {{
-      "title": "Hindi Title with emoji",
+      "title": "Hindi Title with emoji at the end",
       "script": "The complete 8-sentence Hindi script (Combine Hook, Body, and CTA seamlessly)",
       "captions": ["Caption 1", "Caption 2", "Caption 3", "Caption 4", "Caption 5", "Caption 6", "Caption 7", "Caption 8"],
-      "prompts": ["Still life object prompt 1", "Still life object prompt 2", "Still life object prompt 3", "Still life object prompt 4", "Still life object prompt 5", "Still life object prompt 6", "Still life object prompt 7", "Still life object prompt 8"]
+      "prompts": ["Still life object prompt 1", "Still life object prompt 2", "Still life object prompt 3", "Still life object prompt 4", "Still life object prompt 5", "Still life object prompt 6", "Still life object prompt 7", "Still life object prompt 8"],
+      "tags": ["#tag1", "#tag2", "#tag3"]
     }}
     """
     
@@ -84,7 +87,7 @@ def get_master_script(channel_name):
             res = requests.post(url, headers=headers, json=data, timeout=60).json()
             parsed = json.loads(extract_json_safely(res['choices'][0]['message']['content']))
             if parsed.get('script') and len(parsed.get('prompts', [])) == 8:
-                print("🎯 Master Script & Safe Prompts Generated!")
+                print("🎯 Master Viral Script & Safe Prompts Generated!")
                 return parsed
         except Exception as e: time.sleep(3)
     raise Exception("🚨 AI Model Failed to execute master prompt.")
@@ -164,23 +167,23 @@ def build_video(script, image_files, captions, output_vid):
     video.write_videofile(output_vid, fps=24, codec="libx264", audio_codec="aac", preset="ultrafast", logger=None)
     main_audio.close(); video.close()
 
-def upload_youtube(token, filename, title, desc, tags, category_id):
+def upload_youtube(token, filename, title, desc, tags_list, category_id):
     print(f"🚀 Uploading: {title}")
     from google.oauth2.credentials import Credentials; from googleapiclient.discovery import build; from googleapiclient.http import MediaFileUpload
     creds = Credentials(token=None, refresh_token=token, client_id=CLIENT_ID, client_secret=CLIENT_SECRET, token_uri="https://oauth2.googleapis.com/token")
     youtube = build("youtube", "v3", credentials=creds)
-    youtube.videos().insert(part="snippet,status", body={"snippet": {"title": title, "description": desc, "tags": tags, "categoryId": category_id}, "status": {"privacyStatus": "public", "selfDeclaredMadeForKids": False}}, media_body=MediaFileUpload(filename, chunksize=-1, resumable=True)).execute()
+    youtube.videos().insert(part="snippet,status", body={"snippet": {"title": title, "description": desc, "tags": tags_list, "categoryId": category_id}, "status": {"privacyStatus": "public", "selfDeclaredMadeForKids": False}}, media_body=MediaFileUpload(filename, chunksize=-1, resumable=True)).execute()
 
 if __name__ == "__main__":
      channels = [
-        ("GB YOUTUBER", "22", ["bhakti", "spirituality", "wisdom", "shorts"]),
-        ("HEALTH & AYURVEDA", "26", ["health", "ayurveda", "wellness", "shorts"]),
-        ("BUSINESS & MOTIVATION", "27", ["finance", "business", "motivation", "shorts"]),             
-        ("SANATAN RAHASYA", "24", ["rahasya", "ancientindia", "history", "shorts"]),         
-        ("BOOK SUMMARY", "27", ["books", "mindset", "learning", "shorts"])       
+        ("GB YOUTUBER", "22"),
+        ("HEALTH & AYURVEDA", "26"),
+        ("BUSINESS & MOTIVATION", "27"),             
+        ("SANATAN RAHASYA", "24"),         
+        ("BOOK SUMMARY", "27")       
     ]
      
-     for name, cat_id, tags in channels:
+     for name, cat_id in channels:
         token = TOKENS[name]
         try:
             content = get_master_script(name)
@@ -188,11 +191,14 @@ if __name__ == "__main__":
             image_files = fetch_safe_visuals(content['prompts'])
             build_video(content['script'], image_files, content['captions'], final_name)
             
-            desc = f"✨ {content['title']}\n\n{content['script']}\n\n🔗 Best Deals: https://www.amazon.in/?tag=girishbhut07-21"
-            title = f"{content['title']} #shorts"
-            upload_youtube(token, final_name, title[:95], desc, tags, cat_id)
-            print(f"✅ {name} Success (Master Prompt Applied)!")
+            # Title, Description & Tags Processing
+            title = content['title']
+            tags_list = content.get('tags', [])
+            desc = f"✨ {title}\n\n{content['script']}\n\n🔗 Best Deals: https://www.amazon.in/?tag=girishbhut07-21"
+            
+            upload_youtube(token, final_name, title[:95], desc, tags_list, cat_id)
+            print(f"✅ {name} Success (Viral System Prompt Applied)!")
             time.sleep(15)
         except Exception as e: print(f"🛑 Error on {name}: {e}")
 
-     print("\n🏆 ऑपरेशन सक्सेसफुल! V42 मास्टर प्रॉम्प्ट के साथ परफेक्ट वीडियो लाइव हो चुके हैं!")
+     print("\n🏆 ऑपरेशन सक्सेसफुल! V43 एलीट प्रॉम्प्ट मास्टर के साथ परफेक्ट वीडियो लाइव हो चुके हैं!")
