@@ -63,7 +63,7 @@ def get_master_script(channel_name):
     🔥 ABSOLUTE "STILL LIFE" RULE FOR IMAGE PROMPTS (CRITICAL) 🔥:
     - For EACH of the 8 sentences, create an English image prompt describing ONLY beautiful, empty, inanimate STILL LIFE photography.
     - BANNED PROMPT WORDS: Krishna, Shiva, God, Arjuna, King, Man, Woman, Billionaire, Doctor, Scientist, Face, Human, Person, Boy, Girl. (DO NOT USE THESE).
-    - ONLY DESCRIBE INANIMATE OBJECTS & NATURE. Example: "A glowing ancient copper manuscript on a dark stone table".
+    - ONLY DESCRIBE INANIMATE OBJECTS & NATURE. Example: "A glowing ancient copper manuscript on a dark stone table", "A golden glowing flute resting on a giant lotus flower".
     
     Return ONLY valid JSON format exactly like this:
     {{
@@ -93,6 +93,7 @@ def fetch_safe_visuals(prompts):
     image_files = []
     base_seed = random.randint(1000, 99999)
     print("🎨 Generating 8K High-Quality Still-Life Masterpieces...")
+    
     # FIX 3: Stronger User-Agent to prevent server blocking
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"}
     
@@ -105,7 +106,7 @@ def fetch_safe_visuals(prompts):
         for _ in range(5): # Increased retry attempts
             try:
                 res = requests.get(url, headers=headers, timeout=40)
-                # FIX 1: Lowered the file size limit from 15000 to 3000 to allow highly compressed WebP images
+                # FIX 1: Lowered the file size limit from 15000 to 3000 to allow highly compressed images and fix zero-division error
                 if res.status_code == 200 and len(res.content) > 3000:
                     with open(fname, "wb") as f: f.write(res.content)
                     image_files.append(fname)
