@@ -1,5 +1,5 @@
 # ==============================================================================
-# 👑 V43 THE ELITE SYSTEM PROMPT ENGINE: 100% AUTOMATIC, SAFE & STRICT
+# 👑 V44 THE UNBREAKABLE ENGINE: CRASH-PROOF & VIRAL SYSTEM PROMPT
 # ==============================================================================
 
 import os, sys, requests, asyncio, edge_tts, time, urllib.parse, json, random, re, textwrap, io
@@ -9,7 +9,7 @@ if not hasattr(Image, 'Resampling'): Image.Resampling = getattr(Image, 'LANCZOS'
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 from moviepy.editor import ImageClip, AudioFileClip, concatenate_videoclips, CompositeVideoClip
 
-print("🔓 V43 Elite System Prompt Engine: Viral Content Setup Started...")
+print("🔓 V44 Unbreakable Engine: Crash-Proof Viral Setup Started...")
 
 os.system("sudo rm -f /etc/ImageMagick-6/policy.xml")
 os.system("sudo rm -f /etc/ImageMagick-7/policy.xml")
@@ -28,7 +28,6 @@ TOKENS = {
     "BOOK SUMMARY": "1//04ud4vnSb-qXRCgYIARAAGAQSNwF-" + "L9Ir2EmUvUfiuJ7SbqK1IJwk11-Jd0D6UTERpwBPO5FlFd3ZIJ1M08sTjh1dtcYhrKQZ-5M"
 }
 
-# आपके प्रॉम्प्ट के अनुसार चैनल की Niche सेट की गई है
 NICHES = {
     "GB YOUTUBER": "Spirituality & Ancient Wisdom (Focus on Mahabharata and Gita)",
     "HEALTH & AYURVEDA": "Ayurveda & Home Remedies",
@@ -45,7 +44,6 @@ def get_master_script(channel_name):
     niche = NICHES[channel_name]
     print(f"\n📝 Executing Viral System Prompt for {channel_name} (Niche: {niche})...")
     
-    # आपका दिया हुआ "सिस्टम प्रॉम्प्ट" (AI के लिए सख्त नियम)
     prompt = f"""You are an elite YouTube Shorts Scriptwriter and Viral Content Expert. Your only job is to write a highly engaging, 45-50 second script in Hindi that guarantees high audience retention.
 
     Target Niche: {niche}
@@ -53,27 +51,26 @@ def get_master_script(channel_name):
     CRITICAL RULES YOU MUST OBEY:
     1. Title Generation: Keep it under 50 characters. NEVER start the title with the "🤯" emoji. Place 1-2 relevant emojis ONLY at the very end of the title.
     2. The Script Structure: Write EXACTLY 8 sentences total.
-       - Sentence 1 (The Hook: 0-3 Seconds): You MUST start with a shocking pattern-interrupt. Use opening lines like: "क्या आप जानते हैं...", "99% लोग यह गलती करते हैं...", or state a mind-blowing, specific fact. NO boring or slow intros.
+       - Sentence 1 (The Hook: 0-3 Seconds): Start with a shocking pattern-interrupt. Example: "क्या आप जानते हैं...", "99% लोग यह गलती करते हैं...".
        - Sentences 2-7 (The Body): Provide fast-paced, high-value information. 
-         * If Book Summary: You MUST name a REAL, famous self-help/business book (e.g., Atomic Habits, Rich Dad Poor Dad). Explain exactly ONE real principle from it. Absolutely NO fake, fantasy, or made-up stories.
-         * If Ayurveda/Health: Share one specific, practical remedy with real ingredients (e.g., naming specific herbs or daily habits). NEVER claim to 100% cure a serious medical condition.
-         * If Business/Motivation: Share a real-world psychological fact or specific actionable advice. NEVER use words like 'Guaranteed Profit', 'Double your money'.
-         * If Spirituality: Explain a specific ancient concept, text, or energy principle clearly. Keep it respectful, deep, and factual.
-         * GENERAL RULE: Give solid, factual value. DO NOT repeat the same point in different words. NEVER use filler sentences.
-       - Sentence 8 (CTA): Your script MUST end exactly with this line: "ऐसी ही बेहतरीन जानकारी के लिए चैनल को अभी सब्सक्राइब करें।"
-    3. Output Language: The script MUST be entirely in fluent, natural-sounding Hindi.
+         * If Book Summary: Name a REAL, famous self-help/business book. Explain EXACTLY ONE real principle. NO fake stories.
+         * If Ayurveda/Health: Share one specific, practical remedy with real ingredients. NO 100% cure claims.
+         * If Business/Motivation: Share a real-world psychological fact or actionable advice.
+         * If Spirituality: Explain a specific ancient concept clearly and respectfully.
+       - Sentence 8 (CTA): MUST end exactly with: "ऐसी ही बेहतरीन जानकारी के लिए चैनल को अभी सब्सक्राइब करें।"
+    3. Output Language: MUST be entirely in fluent, natural-sounding Devanagari Hindi.
 
     🔥 ABSOLUTE "STILL LIFE" RULE FOR IMAGE PROMPTS (CRITICAL) 🔥:
     - For EACH of the 8 sentences, create an English image prompt describing ONLY beautiful, empty, inanimate STILL LIFE photography.
     - BANNED PROMPT WORDS: Krishna, Shiva, God, Arjuna, King, Man, Woman, Billionaire, Doctor, Scientist, Face, Human, Person, Boy, Girl. (DO NOT USE THESE).
-    - YOU MUST ONLY DESCRIBE INANIMATE OBJECTS & NATURE. Example: "A glowing ancient copper manuscript on a dark stone table".
+    - ONLY DESCRIBE INANIMATE OBJECTS & NATURE. Example: "A glowing ancient copper manuscript on a dark stone table".
     
     Return ONLY valid JSON format exactly like this:
     {{
       "title": "Hindi Title with emoji at the end",
-      "script": "The complete 8-sentence Hindi script (Combine Hook, Body, and CTA seamlessly)",
-      "captions": ["Caption 1", "Caption 2", "Caption 3", "Caption 4", "Caption 5", "Caption 6", "Caption 7", "Caption 8"],
-      "prompts": ["Still life object prompt 1", "Still life object prompt 2", "Still life object prompt 3", "Still life object prompt 4", "Still life object prompt 5", "Still life object prompt 6", "Still life object prompt 7", "Still life object prompt 8"],
+      "script": "The complete 8-sentence Hindi script...",
+      "captions": ["C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8"],
+      "prompts": ["Object prompt 1", "Object prompt 2", "Object prompt 3", "Object prompt 4", "Object prompt 5", "Object prompt 6", "Object prompt 7", "Object prompt 8"],
       "tags": ["#tag1", "#tag2", "#tag3"]
     }}
     """
@@ -87,7 +84,7 @@ def get_master_script(channel_name):
             res = requests.post(url, headers=headers, json=data, timeout=60).json()
             parsed = json.loads(extract_json_safely(res['choices'][0]['message']['content']))
             if parsed.get('script') and len(parsed.get('prompts', [])) == 8:
-                print("🎯 Master Viral Script & Safe Prompts Generated!")
+                print("🎯 Master Viral Script Generated!")
                 return parsed
         except Exception as e: time.sleep(3)
     raise Exception("🚨 AI Model Failed to execute master prompt.")
@@ -96,20 +93,31 @@ def fetch_safe_visuals(prompts):
     image_files = []
     base_seed = random.randint(1000, 99999)
     print("🎨 Generating 8K High-Quality Still-Life Masterpieces...")
-    headers = {"User-Agent": "Mozilla/5.0"}
+    # FIX 3: Stronger User-Agent to prevent server blocking
+    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"}
+    
     for i, p in enumerate(prompts):
         enhanced = f"{p}, 8k resolution, photorealistic cinematic lighting, ultra-detailed macro photography, dark empty background, pure still life photography, masterpiece"
         url = f"https://image.pollinations.ai/prompt/{urllib.parse.quote(enhanced)}?width=1080&height=1920&nologo=true&seed={base_seed+i}"
         fname = f"scene_{i}.jpg"
-        for _ in range(4):
+        
+        success = False
+        for _ in range(5): # Increased retry attempts
             try:
-                res = requests.get(url, headers=headers, timeout=30)
-                if res.status_code == 200 and len(res.content) > 15000:
+                res = requests.get(url, headers=headers, timeout=40)
+                # FIX 1: Lowered the file size limit from 15000 to 3000 to allow highly compressed WebP images
+                if res.status_code == 200 and len(res.content) > 3000:
                     with open(fname, "wb") as f: f.write(res.content)
-                    image_files.append(fname); print(f"   ✅ Still-Life Visual {i+1}/8 Ready!"); break
+                    image_files.append(fname)
+                    print(f"   ✅ Still-Life Visual {i+1}/8 Ready!")
+                    success = True
+                    break
             except: pass
             time.sleep(3)
-        time.sleep(1.5)
+            
+        if not success:
+            print(f"   ⚠️ Warning: Visual {i+1} failed to generate.")
+            
     return image_files
 
 def create_smooth_voice(text, filename):
@@ -144,10 +152,15 @@ def process_image(img_path, output_path):
     bg.save(output_path); return output_path
 
 def build_video(script, image_files, captions, output_vid):
+    # FIX 2: Anti-Crash Shield. If 0 images were downloaded, safely abort instead of zero-division crash.
+    if len(image_files) == 0:
+        raise Exception("Image API Blocked: 0 images downloaded. Aborting video build to prevent crash.")
+        
     print("🎬 Rendering Final Video...")
     voice_file = "temp_voice.mp3"
     create_smooth_voice(script, voice_file)
     main_audio = AudioFileClip(voice_file)
+    
     time_per_image = main_audio.duration / len(image_files)
     
     clips = []
@@ -189,16 +202,17 @@ if __name__ == "__main__":
             content = get_master_script(name)
             final_name = f"final_{name.replace(' ', '_').lower()}.mp4"
             image_files = fetch_safe_visuals(content['prompts'])
+            
             build_video(content['script'], image_files, content['captions'], final_name)
             
-            # Title, Description & Tags Processing
             title = content['title']
             tags_list = content.get('tags', [])
             desc = f"✨ {title}\n\n{content['script']}\n\n🔗 Best Deals: https://www.amazon.in/?tag=girishbhut07-21"
             
             upload_youtube(token, final_name, title[:95], desc, tags_list, cat_id)
-            print(f"✅ {name} Success (Viral System Prompt Applied)!")
+            print(f"✅ {name} Success (Unbreakable Prompt Applied)!")
             time.sleep(15)
-        except Exception as e: print(f"🛑 Error on {name}: {e}")
+        except Exception as e: 
+            print(f"🛑 Error on {name}: {e}")
 
-     print("\n🏆 ऑपरेशन सक्सेसफुल! V43 एलीट प्रॉम्प्ट मास्टर के साथ परफेक्ट वीडियो लाइव हो चुके हैं!")
+     print("\n🏆 ऑपरेशन सक्सेसफुल! V44 अनब्रेकेबल इंजन के साथ सारे काम पूरे हो गए हैं!")
