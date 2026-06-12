@@ -1,5 +1,5 @@
 # ==============================================================================
-# 👑 V44 THE UNBREAKABLE ENGINE: CRASH-PROOF & VIRAL SYSTEM PROMPT
+# 👑 V45 THE SERVER-BYPASS ENGINE: ADVANCED ANTI-BLOCK & VIRAL PROMPTS
 # ==============================================================================
 
 import os, sys, requests, asyncio, edge_tts, time, urllib.parse, json, random, re, textwrap, io
@@ -9,7 +9,7 @@ if not hasattr(Image, 'Resampling'): Image.Resampling = getattr(Image, 'LANCZOS'
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 from moviepy.editor import ImageClip, AudioFileClip, concatenate_videoclips, CompositeVideoClip
 
-print("🔓 V44 Unbreakable Engine: Crash-Proof Viral Setup Started...")
+print("🔓 V45 Server-Bypass Engine: Advanced Anti-Block Setup Started...")
 
 os.system("sudo rm -f /etc/ImageMagick-6/policy.xml")
 os.system("sudo rm -f /etc/ImageMagick-7/policy.xml")
@@ -63,7 +63,7 @@ def get_master_script(channel_name):
     🔥 ABSOLUTE "STILL LIFE" RULE FOR IMAGE PROMPTS (CRITICAL) 🔥:
     - For EACH of the 8 sentences, create an English image prompt describing ONLY beautiful, empty, inanimate STILL LIFE photography.
     - BANNED PROMPT WORDS: Krishna, Shiva, God, Arjuna, King, Man, Woman, Billionaire, Doctor, Scientist, Face, Human, Person, Boy, Girl. (DO NOT USE THESE).
-    - ONLY DESCRIBE INANIMATE OBJECTS & NATURE. Example: "A glowing ancient copper manuscript on a dark stone table", "A golden glowing flute resting on a giant lotus flower".
+    - ONLY DESCRIBE INANIMATE OBJECTS & NATURE. Example: "A glowing ancient copper manuscript on a dark stone table".
     
     Return ONLY valid JSON format exactly like this:
     {{
@@ -94,30 +94,43 @@ def fetch_safe_visuals(prompts):
     base_seed = random.randint(1000, 99999)
     print("🎨 Generating 8K High-Quality Still-Life Masterpieces...")
     
-    # FIX 3: Stronger User-Agent to prevent server blocking
-    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"}
+    # हैक 1: मल्टीपल यूज़र-एजेंट्स (पहचान छुपाने के लिए)
+    user_agents = [
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Safari/605.1.15",
+        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+        "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15",
+        "curl/7.68.0"
+    ]
     
     for i, p in enumerate(prompts):
         enhanced = f"{p}, 8k resolution, photorealistic cinematic lighting, ultra-detailed macro photography, dark empty background, pure still life photography, masterpiece"
-        url = f"https://image.pollinations.ai/prompt/{urllib.parse.quote(enhanced)}?width=1080&height=1920&nologo=true&seed={base_seed+i}"
+        # हैक 2: नया 'flux' मॉडल जो गिटहब को ब्लॉक नहीं करता
+        url = f"https://image.pollinations.ai/prompt/{urllib.parse.quote(enhanced)}?width=1080&height=1920&nologo=true&seed={base_seed+i}&model=flux"
         fname = f"scene_{i}.jpg"
         
         success = False
-        for _ in range(5): # Increased retry attempts
+        for attempt in range(5): 
             try:
+                headers = {"User-Agent": random.choice(user_agents)}
                 res = requests.get(url, headers=headers, timeout=40)
-                # FIX 1: Lowered the file size limit from 15000 to 3000 to allow highly compressed images and fix zero-division error
+                
+                # फाइल कम से कम 3KB की होनी चाहिए (Valid Image)
                 if res.status_code == 200 and len(res.content) > 3000:
                     with open(fname, "wb") as f: f.write(res.content)
                     image_files.append(fname)
                     print(f"   ✅ Still-Life Visual {i+1}/8 Ready!")
                     success = True
                     break
+                else:
+                    print(f"   ⚠️ Blocked on attempt {attempt+1}. Retrying with new ID...")
             except: pass
-            time.sleep(3)
+            
+            # हैक 3: होशियार इंतज़ार (Exponential Backoff)
+            time.sleep(3 + attempt * 2) 
             
         if not success:
-            print(f"   ⚠️ Warning: Visual {i+1} failed to generate.")
+            print(f"   ❌ Error: Visual {i+1} failed completely.")
             
     return image_files
 
@@ -153,9 +166,8 @@ def process_image(img_path, output_path):
     bg.save(output_path); return output_path
 
 def build_video(script, image_files, captions, output_vid):
-    # FIX 2: Anti-Crash Shield. If 0 images were downloaded, safely abort instead of zero-division crash.
-    if len(image_files) == 0:
-        raise Exception("Image API Blocked: 0 images downloaded. Aborting video build to prevent crash.")
+    if len(image_files) < 6: # Require at least 6 good images to proceed
+        raise Exception("Image API Blocked: Not enough images downloaded. Aborting to prevent crash.")
         
     print("🎬 Rendering Final Video...")
     voice_file = "temp_voice.mp3"
@@ -211,9 +223,9 @@ if __name__ == "__main__":
             desc = f"✨ {title}\n\n{content['script']}\n\n🔗 Best Deals: https://www.amazon.in/?tag=girishbhut07-21"
             
             upload_youtube(token, final_name, title[:95], desc, tags_list, cat_id)
-            print(f"✅ {name} Success (Unbreakable Prompt Applied)!")
+            print(f"✅ {name} Success (Anti-Block Setup Applied)!")
             time.sleep(15)
         except Exception as e: 
             print(f"🛑 Error on {name}: {e}")
 
-     print("\n🏆 ऑपरेशन सक्सेसफुल! V44 अनब्रेकेबल इंजन के साथ सारे काम पूरे हो गए हैं!")
+     print("\n🏆 ऑपरेशन सक्सेसफुल! V45 सर्वर-बायपास इंजन के साथ सारे काम पूरे हो गए हैं!")
