@@ -31,10 +31,10 @@ jobs:
 
     - name: Run Video Generator Script
       env:
-        # यह हिस्सा Python को चाबियां (Secrets) दे रहा है
+        # यहाँ YML फाइल आपकी सेव की हुई चाबियों को Python से जोड़ रही है
         GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
         RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
-        GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+        GOOGLE_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
         YOUTUBE_TOKEN_GADGET: ${{ secrets.YOUTUBE_TOKEN_GADGET }}
         YOUTUBE_REFRESH_TOKEN_MYSTIC: ${{ secrets.YOUTUBE_REFRESH_TOKEN_MYSTIC }}
         YOUTUBE_TOKEN_EMPIRE: ${{ secrets.YOUTUBE_TOKEN_EMPIRE }}
