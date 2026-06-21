@@ -27,17 +27,13 @@ jobs:
 
     - name: Install Python Libraries
       run: |
-        pip install requests edge-tts moviepy==1.0.3 pillow==9.5.0 google-api-python-client google-auth-oauthlib google-auth-httplib2 urllib3==1.26.15 yt-dlp pandas
+        pip install requests edge-tts moviepy==1.0.3 pillow==9.5.0 google-api-python-client google-auth-oauthlib google-auth-httplib2 urllib3==1.26.15
 
     - name: Run Video Generator Script
       env:
-        # यहाँ YML फाइल आपकी सेव की हुई चाबियों को Python से जोड़ रही है
         GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
         RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
-        GOOGLE_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-        YOUTUBE_TOKEN_GADGET: ${{ secrets.YOUTUBE_TOKEN_GADGET }}
+        GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+        YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
         YOUTUBE_REFRESH_TOKEN_MYSTIC: ${{ secrets.YOUTUBE_REFRESH_TOKEN_MYSTIC }}
-        YOUTUBE_TOKEN_EMPIRE: ${{ secrets.YOUTUBE_TOKEN_EMPIRE }}
-        YOUTUBE_TOKEN_WEALTH: ${{ secrets.YOUTUBE_TOKEN_WEALTH }}
-        YOUTUBE_TOKEN_ZEROTOUCH: ${{ secrets.YOUTUBE_TOKEN_ZEROTOUCH }}
       run: python main.py
