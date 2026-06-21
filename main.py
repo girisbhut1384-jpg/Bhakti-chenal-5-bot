@@ -39,7 +39,7 @@ TOKEN_WEALTH = os.environ.get("YOUTUBE_TOKEN_WEALTH")
 TOKEN_ZEROTOUCH = os.environ.get("YOUTUBE_TOKEN_ZEROTOUCH")
 
 if not GROQ_KEY:
-    print("❌ Error: GROQ_API_KEY nahi mili! Kripya GitHub Secrets check karein.")
+    print("❌ Error: GROQ_API_KEY nahi mili!")
     sys.exit(1)
 
 GADGET_HOOKS = ["Hidden Amazon Tech", "Must-Have Smart Gadgets", "Genius Kitchen Tools", "Car Gadgets You Need", "Cool Room Tech"]
@@ -53,6 +53,7 @@ def extract_json_safely(raw_text):
 def get_script_and_prompts(hook_theme, category):
     print(f"\n✅ AI Engine Master Prompt ke sath Content likh raha hai: {hook_theme}")
     
+    # 🟢 बॉस का दिया हुआ 'Master System Prompt' यहाँ 100% फिट कर दिया गया है
     master_system_rules = """
     STRICT RULES TO FOLLOW:
     1. Title Generation: Create a unique, highly clickable title (under 50 characters). DO NOT use the "🤯" emoji at the start. Use a different, relevant emoji at the END of the title. Never repeat previous titles.
@@ -117,7 +118,7 @@ def get_script_and_prompts(hook_theme, category):
     
     url = "https://api.groq.com/openai/v1/chat/completions"
     headers = {"Authorization": f"Bearer {GROQ_KEY}", "Content-Type": "application/json"}
-    data = {"model": "llama-3.3-70b-versatile", "messages": [{"role": "user", "content": prompt}], "temperature": 0.9, "max_tokens": 1500} 
+    data = {"model": "llama-3.3-70b-versatile", "messages": [{"role": "user", "content": prompt}], "temperature": 0.9} 
     
     for attempt in range(3):
         try:
@@ -135,14 +136,8 @@ def get_script_and_prompts(hook_theme, category):
                         parsed.get('description', 'Watch this amazing video!'),
                         parsed.get('tags', ['shorts', 'viral', 'trending'])
                     )
-            else:
-                print(f"⚠️ Groq API Error (Status {response.status_code}): {response.text}")
-                time.sleep(5)
-        except Exception as e: 
-            print(f"⚠️ Request Error: {e}")
-            time.sleep(5)
-            
-    raise Exception("🚨 AI Model Failed after 3 attempts. Kripya logs check karein.")
+        except: time.sleep(2)
+    raise Exception("🚨 AI Model Failed!")
 
 def fetch_amazon_images_strict(query):
     clean_query = re.sub(r'[^a-zA-Z0-9 ]', '', str(query)).strip()
@@ -286,6 +281,7 @@ def run_channel_safely(channel_name, token, hook_list, category="MYSTERY"):
     for attempt in range(5):
         try:
             hook = random.choice(hook_list)
+            # 🟢 मशीन अब मास्टर प्रॉम्प्ट से बिल्कुल परफेक्ट डेटा ला रही है
             script, prompts, captions, amazon_term, dyn_title, dyn_desc, dyn_tags = get_script_and_prompts(hook, category)
             
             prefix = channel_name.replace(" ", "_").lower()
@@ -330,6 +326,7 @@ def run_channel_safely(channel_name, token, hook_list, category="MYSTERY"):
                 print(f"✅ {channel_name} Video Live! Title: {dyn_title}")
                 return True 
                 
+        # 🟢 4 घंटे की बर्बादी रोकने वाला 'स्मार्ट ब्रेक'
         except HttpError as e:
             error_content = str(e).lower()
             if "quota" in error_content or "ratelimit" in error_content or "429" in error_content:
@@ -361,3 +358,4 @@ if __name__ == "__main__":
         time.sleep(15)
         
     print("\n✅ सभी 5 चैनलों का काम खत्म हो गया है बॉस!")
+
