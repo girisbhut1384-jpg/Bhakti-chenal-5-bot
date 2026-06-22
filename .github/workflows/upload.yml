@@ -1,4 +1,4 @@
-Name: Auto YouTube Shorts Generator
+name: Auto YouTube Shorts Generator
 
 on:
   schedule:
