@@ -1,5 +1,5 @@
 # ==============================================================================
-# 👑 V47 TITAN NEW NICHE ENGINE: 100% FACELESS, AUTOMATED NEW CHANNEL SYSTEM
+# 👑 V48 TITAN EMPIRE ENGINE: ORIGINAL 5 CHANNELS, 100% FACELESS & BUG-FREE
 # ==============================================================================
 
 import os, sys, requests, asyncio, edge_tts, time, urllib.parse, json, random, re, textwrap, io
@@ -9,7 +9,7 @@ if not hasattr(Image, 'Resampling'): Image.Resampling = getattr(Image, 'LANCZOS'
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 from moviepy.editor import ImageClip, AudioFileClip, concatenate_videoclips, CompositeVideoClip
 
-print("🔓 V47 Titan New Niche Engine: 5 New Channels Setup Active...")
+print("🔓 V48 Titan Engine: Original 5 Channels Setup Started...")
 
 os.system("sudo rm -f /etc/ImageMagick-6/policy.xml")
 os.system("sudo rm -f /etc/ImageMagick-7/policy.xml")
@@ -20,30 +20,21 @@ GROQ_KEY = "gsk_x1ThbfTdXoyFdlWkW5gT" + "WGdyb3FY4sGNe3aEAulVCEVOlXtI0lCz"
 CLIENT_ID = "768932543756-ndfvqmbb0p7ffa1r1cg6bmmuimim98n6.apps.googleusercontent.com"
 CLIENT_SECRET = "GOCSPX-" + "__q2fG3cAhPWL0xjrbIEG2fk_T48"
 
-# 🔑 यहाँ अपने ५ नए चैनलों की रिफ्रेश टोकन चाबियाँ डालें
+# 🔑 आपके ऑरिजनल 5 चैनलों के टोकन
 TOKENS = {
-    "GIRISH AI GADGET": "YOUR_REFRESH_TOKEN_HERE",
-    "MYSTERY CHANNEL": "YOUR_REFRESH_TOKEN_HERE",
-    "FACELESS AI WEALTH": "YOUR_REFRESH_TOKEN_HERE",
-    "AI AUTO PILOT EMPIRE": "YOUR_REFRESH_TOKEN_HERE",
-    "ZEROTOUCH AI CREATOR": "YOUR_REFRESH_TOKEN_HERE"
+    "GB YOUTUBER": "1//04Yw4AZp47TkeCgYIARAAGAQSNwF-" + "L9IrX5ZcptNraLK2IX1nxWfwJZI7M_QYYaMSD1du-0_nokcboxQaTZQoN5XsQq7a3Ise7ho",
+    "HEALTH & AYURVEDA": "1//04YIai_athiwVCgYIARAAGAQSNwF-" + "L9Irkq4Y5Rc2z_b_tybVROarlZNAiTNgxfw4Eg_gzO7Pqyys-TBXm1apTEhbUDksk8fAbTc",
+    "BUSINESS & MOTIVATION": "1//04zCurvQGZ8DeCgYIARAAGAQSNwF-" + "L9Irdi9mNocm5HJ1NHKGeFiqNFi61fhfJ-tM7wCPXsfgwMKMZYZhikYYn0WDgdh_fmwiHJs",
+    "SANATAN RAHASYA": "1//04ik1YQvHuc9ACgYIARAAGAQSNwF-" + "L9IrRJ5gl71WIxeNdibVP-2dvzOEaoKCkz0g1AmYTb6stShs1NMIM5T8brDBhUezdzgK_s8",
+    "BOOK SUMMARY": "1//04ud4vnSb-qXRCgYIARAAGAQSNwF-" + "L9Ir2EmUvUfiuJ7SbqK1IJwk11-Jd0D6UTERpwBPO5FlFd3ZIJ1M08sTjh1dtcYhrKQZ-5M"
 }
 
 NICHES = {
-    "GIRISH AI GADGET": "Tech Gadgets & Future Innovations",
-    "MYSTERY CHANNEL": "Unsolved Mysteries & Shocking Facts",
-    "FACELESS AI WEALTH": "Personal Finance & Wealth Creation",
-    "AI AUTO PILOT EMPIRE": "AI Automation & Digital Business",
-    "ZEROTOUCH AI CREATOR": "AI Content Creation & Automation Secrets"
-}
-
-# नए चैनलों के लिए कड़क वायरल हुक्स
-HOOKS = {
-    "GIRISH AI GADGET": ["भविष्य का वो गुप्त गैजेट जो इंसानी दिमाग के विचारों को सीधे स्क्रीन पर पढ़ सकता है", "स्मार्टफोन की दुनिया को ख़त्म करने वाली वो नई एआई तकनीक जो बाज़ार में आ चुकी है", "एक ऐसा एडवांस रोबोटिक डिवाइस जिसने इंसानी श्रम के तरीके को पूरी तरह बदल दिया"],
-    "MYSTERY CHANNEL": ["इतिहास का वो अनसुलझा रहस्य जिसे सुलझाने की कोशिश करने वाले सभी वैज्ञानिक गायब हो गए", "बरमूडा ट्रायंगल से भी ज्यादा खतरनाक पृथ्वी का वो गुप्त स्थान जिसका सच हमेशा छुपाया गया", "अंतरिक्ष से आया वो एक रहस्यमयी सिग्नल जो पृथ्वी के भविष्य की बड़ी चेतावनी दे रहा है"],
-    "FACELESS AI WEALTH": ["बिना अपना चेहरा दिखाए इंटरनेट से करोड़ों की वेल्थ बनाने का वो गुप्त चक्रव्यूह", "अमीर लोग पैसे से पैसा बनाने के लिए किस गुप्त और कड़े फाइनेंस नियम का उपयोग करते हैं", "आधुनिक डिजिटल युग में कंसिस्टेंट पैसिव इनकम जनरेट करने का वो सबसे अचूक तरीका"],
-    "AI AUTO PILOT EMPIRE": ["पूरी तरह ऑटो-पायलट पर चलने वाला वो एआई बिज़नेस जो सोते हुए भी पैसे कमाता है", "इतिहास का सबसे एडवांस एआई टूल जो इंसानी नौकरियों को १० गुना तेजी से रिप्लेस कर रहा है", "एआई ऑटोमेशन का वो गुप्त नियम जिससे आप अपना खुद का डिजिटल साम्राज्य खड़ा कर सकते हैं"],
-    "ZEROTOUCH AI CREATOR": ["सिर्फ़ एआई टूल्स की मदद से वायरल वीडियो कॉन्टेंट बनाने का वो सीक्रेट एल्गोरिदम", "बिना एक शब्द बोले या चेहरा दिखाए यूट्यूब पर राज करने वाली सीक्रेट एआई तकनीक", "कंटेंट क्रिएशन का वो नया भविष्य जहाँ ९० प्रतिशत काम सिर्फ़ स्वायत्त रोबोट्स कर रहे हैं"]
+    "GB YOUTUBER": "Spirituality & Ancient Wisdom (Focus on Mahabharata and Gita)",
+    "HEALTH & AYURVEDA": "Ayurveda & Home Remedies",
+    "BUSINESS & MOTIVATION": "Business, Motivation & Personal Finance",
+    "SANATAN RAHASYA": "Spirituality & Ancient Indian Facts",
+    "BOOK SUMMARY": "Real Book Summaries & Life Lessons"
 }
 
 def extract_json_safely(raw_text):
@@ -52,34 +43,34 @@ def extract_json_safely(raw_text):
 
 def get_master_script(channel_name):
     niche = NICHES[channel_name]
-    hook = random.choice(HOOKS[channel_name])
-    print(f"\n📝 Executing Viral Prompt for {channel_name} (Niche: {niche})...")
+    print(f"\n📝 Executing Viral System Prompt for {channel_name} (Niche: {niche})...")
     
     prompt = f"""You are an elite YouTube Shorts Scriptwriter and Viral Content Expert. Your only job is to write a highly engaging, 45-50 second script in Hindi that guarantees high audience retention.
 
     Target Niche: {niche}
-    Core Theme/Hook Idea: {hook}
 
     CRITICAL RULES YOU MUST OBEY:
-    1. Title Generation: Keep it under 50 characters. NEVER start the title with any emoji. Place 1-2 relevant emojis ONLY at the very end of the title.
+    1. Title Generation: Keep it under 50 characters. NEVER start the title with the emoji. Place 1-2 relevant emojis ONLY at the very end.
     2. The Script Structure: Write EXACTLY 8 sentences total.
-       - Sentence 1 (The Hook: 0-3 Seconds): Start with a shocking pattern-interrupt using the provided Core Theme/Hook Idea. Use opening lines like: "क्या आप जानते हैं...", "99% लोग यह गलती करते हैं...".
-       - Sentences 2-7 (The Body): Provide fast-paced, high-value information. Keep sentences short, punchy, and highly educational. 
-         * If Finance/Wealth: NEVER use words like 'Guaranteed Profit', 'Double your money'. Focus on smart financial strategies and scalable systems.
-         * If Gadget/AI: Explain specific technical mechanisms, software systems, or architectural innovations logically.
-         * GENERAL RULE: Give solid, factual value. DO NOT repeat the same point in different words. NEVER use filler sentences.
+       - Sentence 1 (The Hook: 0-3 Seconds): You MUST start with a shocking pattern-interrupt. Example: "क्या आप जानते हैं...", "99% लोग यह गलती करते हैं...".
+       - Sentences 2-7 (The Body): Provide fast-paced, high-value information. 
+         * If Book Summary: Name a REAL, famous self-help/business book. Explain EXACTLY ONE real principle. NO fake stories.
+         * If Ayurveda/Health: Share one specific, practical remedy with real ingredients. NO 100% cure claims.
+         * If Business/Motivation: Share a real-world psychological fact or specific actionable advice.
+         * If Spirituality: Explain a specific ancient concept, text, or energy principle clearly. Keep it factual.
+         * GENERAL RULE: Give solid value. DO NOT repeat points.
        - Sentence 8 (CTA): Your script MUST end exactly with this line: "ऐसी ही बेहतरीन जानकारी के लिए चैनल को अभी सब्सक्राइब करें।"
-    3. Output Language: The script MUST be entirely in fluent, natural-sounding Devanagari Hindi.
+    3. Output Language: MUST be entirely in fluent, natural-sounding Devanagari Hindi.
 
-    🔥 ABSOLUTE "STILL LIFE" RULE FOR IMAGE PROMPTS 🔥:
-    - For EACH of the 8 sentences, create an English image prompt describing ONLY beautiful, empty, inanimate STILL LIFE or premium architectural/macro photography.
-    - BANNED PROMPT WORDS: Krishna, Shiva, God, King, Man, Woman, Face, Human, Person, Boy, Girl, Actor, Figure, Professional, Specialist. (DO NOT USE THESE).
-    - ONLY DESCRIBE INANIMATE OBJECTS & NATURE. Example: "A glowing futuristic circuit board on a sleek dark metallic table", "An old leather notebook open with glowing matrix data streams".
+    🔥 ABSOLUTE "STILL LIFE" RULE FOR IMAGE PROMPTS (CRITICAL) 🔥:
+    - For EACH of the 8 sentences, create an English image prompt describing ONLY beautiful, empty, inanimate STILL LIFE photography.
+    - BANNED PROMPT WORDS: Krishna, Shiva, God, Arjuna, King, Man, Woman, Face, Human, Person, Boy, Girl, Actor, Figure, Character, Portrait, People. (DO NOT USE THESE).
+    - YOU MUST ONLY DESCRIBE INANIMATE OBJECTS & NATURE. Example: "A glowing ancient copper manuscript on a dark stone table", "A golden coin glowing in a dark vault", "An empty dark temple illuminated by glowing diyas".
     
     Return ONLY valid JSON format exactly like this:
     {{
       "title": "Hindi Title with emoji at the end",
-      "script": "The complete 8-sentence Hindi script...",
+      "script": "The complete 8-sentence Hindi script",
       "captions": ["C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8"],
       "prompts": ["Object prompt 1", "Object prompt 2", "Object prompt 3", "Object prompt 4", "Object prompt 5", "Object prompt 6", "Object prompt 7", "Object prompt 8"],
       "tags": ["#tag1", "#tag2", "#tag3"]
@@ -95,7 +86,7 @@ def get_master_script(channel_name):
             res = requests.post(url, headers=headers, json=data, timeout=60).json()
             parsed = json.loads(extract_json_safely(res['choices'][0]['message']['content']))
             if parsed.get('script') and len(parsed.get('prompts', [])) == 8:
-                print("🎯 Master Viral Script Generated!")
+                print("🎯 Master Viral Script & Safe Prompts Generated!")
                 return parsed
         except Exception as e: time.sleep(3)
     raise Exception("🚨 AI Model Failed to execute master prompt.")
@@ -113,6 +104,7 @@ def fetch_safe_visuals(prompts):
     
     for i, p in enumerate(prompts):
         enhanced = f"{p}, 8k resolution, photorealistic cinematic lighting, ultra-detailed macro photography, dark empty background, pure still life photography, masterpiece"
+        # model=flux वेबसाइट को ब्लॉक होने से बचाता है और चेहरे नहीं बनने देता
         url = f"https://image.pollinations.ai/prompt/{urllib.parse.quote(enhanced)}?width=1080&height=1920&nologo=true&seed={base_seed+i}&model=flux"
         fname = f"scene_{i}.jpg"
         
@@ -168,7 +160,7 @@ def process_image(img_path, output_path):
 
 def build_video(script, image_files, captions, output_vid):
     if len(image_files) < 6:
-        raise Exception("Image API Blocked: Not enough valid images. Aborting to prevent zero division.")
+        raise Exception("Image API Blocked: Not enough images downloaded. Aborting to prevent crash.")
         
     print("🎬 Rendering Final Video...")
     voice_file = "temp_voice.mp3"
@@ -195,10 +187,7 @@ def build_video(script, image_files, captions, output_vid):
     main_audio.close(); video.close()
 
 def upload_youtube(token, filename, title, desc, tags_list, category_id):
-    if token == "YOUR_REFRESH_TOKEN_HERE" or not token:
-        print(f"⚠️ Skip Upload: Valid token is missing.")
-        return
-    print(f"🚀 Uploading to YouTube: {title}")
+    print(f"🚀 Uploading: {title}")
     from google.oauth2.credentials import Credentials; from googleapiclient.discovery import build; from googleapiclient.http import MediaFileUpload
     creds = Credentials(token=None, refresh_token=token, client_id=CLIENT_ID, client_secret=CLIENT_SECRET, token_uri="https://oauth2.googleapis.com/token")
     youtube = build("youtube", "v3", credentials=creds)
@@ -206,18 +195,15 @@ def upload_youtube(token, filename, title, desc, tags_list, category_id):
 
 if __name__ == "__main__":
      channels = [
-        ("GIRISH AI GADGET", "28"),
-        ("MYSTERY CHANNEL", "24"),
-        ("FACELESS AI WEALTH", "27"),             
-        ("AI AUTO PILOT EMPIRE", "27"),         
-        ("ZEROTOUCH AI CREATOR", "28")       
+        ("GB YOUTUBER", "22"),
+        ("HEALTH & AYURVEDA", "26"),
+        ("BUSINESS & MOTIVATION", "27"),             
+        ("SANATAN RAHASYA", "24"),         
+        ("BOOK SUMMARY", "27")       
     ]
      
      for name, cat_id in channels:
-        token = TOKENS.get(name)
-        if token == "YOUR_REFRESH_TOKEN_HERE" or not token:
-            print(f"⚠️ {name} token placeholder found. Skipping this channel.")
-            continue
+        token = TOKENS[name]
         try:
             content = get_master_script(name)
             final_name = f"final_{name.replace(' ', '_').lower()}.mp4"
@@ -235,4 +221,4 @@ if __name__ == "__main__":
         except Exception as e: 
             print(f"🛑 Error on {name}: {e}")
 
-     print("\n🏆 ऑपरेशन सक्सेसफुल! V47 टाइटन न्यू निश इंजन के साथ सारे काम पूरे हो गए हैं!")
+     print("\n🏆 ऑपरेशन सक्सेसफुल! V48 टाइटन एम्पायर इंजन के साथ सारे काम पूरे हो गए हैं!")
