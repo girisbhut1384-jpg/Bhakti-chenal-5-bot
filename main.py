@@ -1,15 +1,21 @@
 # ==============================================================================
-# 👑 V48 TITAN EMPIRE ENGINE: ORIGINAL 5 CHANNELS, 100% FACELESS & BUG-FREE
+# 👑 V49 TITAN EMPIRE ENGINE: ORIGINAL 5 CHANNELS, ANTIALIAS FIXED & BUG-FREE
 # ==============================================================================
 
 import os, sys, requests, asyncio, edge_tts, time, urllib.parse, json, random, re, textwrap, io
 from datetime import datetime, timedelta
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
-if not hasattr(Image, 'Resampling'): Image.Resampling = getattr(Image, 'LANCZOS', 1)
+
+# 🛠️ MOVIEPY ANTIALIAS BUG FIX (यहाँ एडिटर को फिक्स किया गया है) 🛠️
+if not hasattr(Image, 'Resampling'): 
+    Image.Resampling = getattr(Image, 'LANCZOS', 1)
+if not hasattr(Image, 'ANTIALIAS'): 
+    Image.ANTIALIAS = Image.Resampling.LANCZOS
+
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 from moviepy.editor import ImageClip, AudioFileClip, concatenate_videoclips, CompositeVideoClip
 
-print("🔓 V48 Titan Engine: Original 5 Channels Setup Started...")
+print("🔓 V49 Titan Engine: Antialias Fixed & Original 5 Channels Setup Started...")
 
 os.system("sudo rm -f /etc/ImageMagick-6/policy.xml")
 os.system("sudo rm -f /etc/ImageMagick-7/policy.xml")
@@ -104,7 +110,6 @@ def fetch_safe_visuals(prompts):
     
     for i, p in enumerate(prompts):
         enhanced = f"{p}, 8k resolution, photorealistic cinematic lighting, ultra-detailed macro photography, dark empty background, pure still life photography, masterpiece"
-        # model=flux वेबसाइट को ब्लॉक होने से बचाता है और चेहरे नहीं बनने देता
         url = f"https://image.pollinations.ai/prompt/{urllib.parse.quote(enhanced)}?width=1080&height=1920&nologo=true&seed={base_seed+i}&model=flux"
         fname = f"scene_{i}.jpg"
         
@@ -221,4 +226,4 @@ if __name__ == "__main__":
         except Exception as e: 
             print(f"🛑 Error on {name}: {e}")
 
-     print("\n🏆 ऑपरेशन सक्सेसफुल! V48 टाइटन एम्पायर इंजन के साथ सारे काम पूरे हो गए हैं!")
+     print("\n🏆 ऑपरेशन सक्सेसफुल! V49 टाइटन एम्पायर इंजन के साथ सारे काम पूरे हो गए हैं!")
